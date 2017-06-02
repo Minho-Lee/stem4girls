@@ -3,170 +3,20 @@ extends layout
 block content
 	html
 	body(data-spy='scroll', data-target='.navbar')
-		header
 		nav.navbar.navbar-default.navbar-fixed-top
 			.container
-				.navbar-header
-					button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
-					span.sr-only Toggle Navigation
-					span.icon-bar
-					span.icon-bar
-					span.icon-bar
-				.navbar-collapse.collapse
-					ul.nav.nav-justified
-						li
-							a(data-scroll='', href='#about') Services
-						li
-							a(data-scroll='', href='#features') Clients
-						li
-					a(data-scroll='', href='#screenshots') Our team
-				li
-					a(data-scroll='', href='#download') Blog
-				li
-					a(data-scroll='', href='#support') Careers
-		section
-			#myCarousel.carousel.slide(data-ride='carousel')
-			ol.carousel-indicators
-				li.active(data-target='#myCarousel', data-slide-to='0')
-				li(data-target='#myCarousel', data-slide-to='1')
-				li(data-target='#myCarousel', data-slide-to='2')
-			.carousel-inner(role='listbox')
-				.item.active
-					.container
-						.carousel-caption
-							h3 What's Your Idea?
-							h1 Develop Outstanding Products.Fast.
-				.item
-					.container
-						.carousel-caption
-							h3 Full Stack Software Development Consulting
-							h1 Unlock Your Digital Business Potential
-				.item
-					.container
-						.carousel-caption
-							h3 Web? Mobile? Big Data? Ecommerce?
-							h1 Yes, We Can Build That
-			a.left.carousel-control(href='#myCarousel', data-slide='prev')
-				img(src='img/arrow_gray.png')
-			a.right.carousel-control(href='#myCarousel', data-slide='next')
-				img(src='img/arrow_gray.png')
-
-		section
-			.text-center
-				button.btn-responsive.btn-primary(type='button') Contact Us
-		section#section-marketing
-			h3 WE SHIP SUCCESS EVERY DAY. WHAT CAN WE DO FOR YOU?
-			.container.marketing
-				.row
-					.col-lg-4.panel1.effect2
-						img#services-icon.img-responsive.center-block.web(src='img/n_web.png')
-						h4#text1 Web Development
-						.text2div
-							p#text2 Ruby On Rails
-							p#text2 Front-End
-						img#services-arrow.img-responsive.center-block(src='img/arrow_gray.png')
-					.col-lg-4.panel1.effect2
-						img#services-icon.img-responsive.center-block.mobile(src='img/n_mobile.png')
-						h4#text1 Mobile Development
-						.text2div
-							p#text2 Android
-							p#text2 iOS
-						img#services-arrow.img-responsive.center-block(src='img/arrow_gray.png')
-					.col-lg-4.panel1.effect2
-						img#services-icon.img-responsive.center-block.design(src='img/n_design.png')
-						h4#text1 Product Design
-						.text2div
-							p#text2 UX
-							p#text2 Product Reveal
-						img#services-arrow.img-responsive.center-block(src='img/arrow_gray.png')
-		section#success-stories
-			h3 SUCCESS STORIES
-			.container
-				.row
-					.col-md-6
-						img(style='width: 100%', src='img/1_main-1-min.png', alt='')
-					.col-md-6
-						h2 Constantly growing UK Big Data Company
-						p Property Detective (PD) wanted to create a “big data” solution for property buyers. The idea was to provide buyers with comprehensive information on current and future quality of life in areas in which people might consider living or investing.
-						a(href='#') See Case Study
-						#stat-item-group.row
-							.col-sm-6.stat-item
-								h1 31m
-								p Weekly users
-							.col-sm-6.stat-item
-								h1 200
-								p Concurrent customized 40-page reports
-		section#section-features
-			.container
-				.row
-					.col-sm-3.features-item.separator
-						img.img-responsive.center-block(src='img/clients_icon.png')
-						h1 98%
-						p Satisfied Clients
-					.col-sm-3.features-item.separator
-						img.img-responsive.center-block(src='img/projects_icon.png')
-						h1 60
-						p Projects A Year
-					.col-sm-3.features-item.separator
-						img.img-responsive.center-block(src='img/members_icon.png')
-						h1 193
-						p Team Members
-					.col-sm-3.features-item
-						img.img-responsive.center-block(src='img/blog_icons.png')
-						h1 675
-						p Blog Posts
-		section#section-testimonials
-			h3 TESTIMONIALS
-			.content.container
-				img(src='img/quote-green.png', alt='')
-				.testimonials-content.effect3
-					img.img-circle(src='img/chris_w.jpg', alt='')
-					h1 Chris Waters, Co-founder
-					h2 Inn Style
-					p  I love Netguru for their engineering talent, obviously - but it's the nuggets of advice from Wiktor and Kuba, and the open communication with project managers that really keep the good ship Inn Style on course.
-		section#section-projects
-			h3 OUR PROJECTS WERE FEATURED ON
-			.container
-				.row.content
-					.col-sm-3.projects-item
-						img.img-responsive.center-block(src='img/business-insider.png')
-					.col-sm-3.projects-item
-						img.img-responsive.center-block(src='img/logoTechCrunch2x.png')
-					.col-sm-3.projects-item
-						img.img-responsive.center-block(src='img/tnw-logo2x.png')
-					.col-sm-3.projects-item
-						img.img-responsive.center-block(src='img/lifehacker.png')
-		section#section-resources
-			h3 CHECK OUT OUR RESOURCES
-			.container.resources
-				.row
-					.col-lg-8
-						.panel1
-							.text1div
-								img#book-icon.img-responsive(src='img/bg_1-min.png')
-								img#arrow-icon.img-responsive(src='img/arrow_right_white.png')
-							.text2div
-								h2#text1 Project Management Tactics for Pros
-								p#text2 E-book
-					.col-lg-4.vcenter
-						.panel1
-							.text1div
-								img#book-icon.img-responsive(src='img/bg_2-min.png')
-								img#arrow-icon.img-responsive(src='img/arrow_right_white.png')
-							.text2div
-								h2#text1 Project Management Tactics for Pros
-								p#text2 E-book
-					.col-lg-4.vcenter
-						.panel1
-							.text1div
-								img#book-icon.img-responsive(style='margin-top:8px', src='img/bg_3-min.png')
-								img#arrow-icon.img-responsive(src='img/arrow_right_white.png')
-							.text2div
-								h2#text1 Project Management Tactics for Pros
-								p#text2 E-book
-		section#section-team
-			h3 MEET OUR TEAM
-			.container.team
-				img#team-photo.img-responsive(src='img/people-min.png')
-				h5 191
+				h1 Countdown Clock
+				div#clockdiv
+					div
+						span.days
+						.smalltext Days
+					div
+						span.hours
+						.smalltext Hours
+					div
+						span.minutes
+						.smalltext Minutes
+					div
+						span.seconds
+						.smalltext Seconds
 

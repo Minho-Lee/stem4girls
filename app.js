@@ -21,14 +21,14 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 //app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'jade');
 
-
+app.use(express.static(__dirname + '/public'));
 
 
 app.get('/', function(req, res) {
-	res.render('index', { title: 'Stem4Girls' });
+	res.render('index.html', { title: 'Stem4Girls' });
 });
 
 // catch 404 and forward to error handler
