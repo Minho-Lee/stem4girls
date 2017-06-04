@@ -39,16 +39,6 @@
 
 /*Services section*/
 
-h3, .marketing p {
-    color: #fff;
-    font-family: 'Montserrat', sans-serif;
-}
-
-h3 {
-    font-size: 18px;
-    font-weight: 400;
-}
-
 h4 {
     font-size: 18px;
     font-weight: 400;
@@ -75,7 +65,7 @@ h4 {
     padding-bottom: 70px;
 }
 
-#section-marketing h3:after {
+/*#section-marketing h3:after {
     top: 15px;
     left: 50%;
     bottom: 0;
@@ -85,7 +75,7 @@ h4 {
     border: 1px solid #80EBB2;
     width: 35px;
     transform: translateX(-50%);
-}
+}*/
 
 .marketing .col-lg-4 {
     margin-bottom: 1.5rem;
@@ -259,11 +249,12 @@ Carousel
 h3 {
     font-size: 15px;
     text-transform: uppercase;
-    color: #a2a2a2;
+    color: black;
     text-align: center;
+    font-family: 'Montserrat', sans-serif;
 }
 
-h3:after {
+/*h3:after {
     top: 15px;
     left: 50%;
     bottom: 0;
@@ -273,7 +264,7 @@ h3:after {
     border: 1px solid #00d664;
     width: 35px;
     transform: translateX(-50%);
-}
+}*/
 
 .carousel-caption h1 {
     font-size: 40px;
@@ -793,11 +784,12 @@ end success-stories
 
 @media(min-width:1200px) {}
 
+/*#a8c0f3*/
 body{
     text-align: center;
-    background: #00ECB9;
-  font-family: sans-serif;
-  font-weight: 100;
+    background: #deedf7;
+    font-family: sans-serif;
+    font-weight: 100;
 }
 
 h1{
@@ -807,7 +799,7 @@ h1{
   margin: 40px 0px 20px;
 }
 
-#clockdiv{
+#clockdiv, #weekdiv{
     font-family: sans-serif;
     color: #fff;
     display: inline-block;
@@ -816,19 +808,21 @@ h1{
     font-size: 30px;
 }
 
-#clockdiv > div{
+#clockdiv > div , #weekdiv > div{
     padding: 10px;
     border-radius: 3px;
-    background: #00BF96;
+    background: #00baa1;
     display: inline-block;
 }
 
-#clockdiv div > span{
+#clockdiv div > span, #weekdiv div > span{
     padding: 15px;
     border-radius: 3px;
-    background: #00816A;
+    background: #008673;
     display: inline-block;
 }
+
+
 
 .smalltext{
     padding-top: 5px;
