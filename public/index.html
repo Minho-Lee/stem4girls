@@ -13,60 +13,121 @@
         <link rel="stylesheet" href="css/font-awesome.min.css">
         <link rel="stylesheet" href="css/animate.css">
         <link rel="stylesheet" href="css/bootstrapValidator.css">
+        <!--link rel="stylesheet" href="css/flexboxgrid.css"-->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
         <link rel="stylesheet" href="css/main.css">
+        
+        
 
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
     </head>
-    <body>
-        <h1><font color="#008673">Learn to Save!</h1>
-        <h3>The timer will start once you enter your bi-weekly salary</h2>
-        <section id="salaryInput">
-            <!--form id="salaryForm"-->
-                Bi-Weekly Salary:&nbsp&nbsp
-                <input type="text" id="salary" name="salary" placeholder="dollars" disalbed='false'><br/><br/>
-                <button onclick="submitSalary()">Submit!</button>
-                <div id="afterSubmit"></div>
-            <!--/form-->
-        </section>
+    <body class="container">
+        <h1 class="centered"><font color="#008673">Learn to Save!</h1>
+        <div class="panel panel-default">
+            <div class="panel-heading centered" style="max-width: 10;">
+                <h3>The timer will start once you enter your bi-weekly salary</h3>
+                <section id="salaryInput" class="centered">
+                    <!--form id="salaryForm"-->
+                        Bi-Weekly Salary:&nbsp&nbsp
+                        <input type="text" id="salary" name="salary" placeholder="dollars" disalbed='false'><br/><br/>
+                        <button id="submitSalary" onclick="submitSalary()">Submit!</button>
+                        <div id="afterSubmit"></div>
+                        <div id="currentBalance"></div>
+                        <div id="foodExpense"></div>
+                        <div id="houseExpense"></div>
+                        <div id="eventUpdate"></div>
+                    <!--/form-->
+                </section>
+            </div>
+        </div>
+
         <!--h3 id="salaryShow"></h3-->
         <section>
-            <div id="salaryIncrease"></div>
-            <div id="clockdiv" class="col-md-6">
-              <div>
-                <span class="days">0</span>
-                <div class="smalltext">Days</div>
-              </div>
-              <div>
-                <span class="hours">00</span>
-                <div class="smalltext">Hours</div>
-              </div>
-              <div>
-                <span class="minutes">00</span>
-                <div class="smalltext">Minutes</div>
-              </div>
-              <div>
-                <span class="seconds">00</span>
-                <div class="smalltext">Seconds</div>
-              </div>
-            </div>
-        </section>
+            <div class="row justify-content-around">
+                <div id="clockdiv" class="col-md-6 col-md-offset-1">
+                  <div>
+                    <span class="days">0</span>
+                    <div class="smalltext">Days</div>
+                  </div>
+                  <div>
+                    <span class="hours">00</span>
+                    <div class="smalltext">Hours</div>
+                  </div>
+                  <div>
+                    <span class="minutes">00</span>
+                    <div class="smalltext">Minutes</div>
+                  </div>
+                  <div>
+                    <span class="seconds">00</span>
+                    <div class="smalltext">Seconds</div>
+                  </div>
+                </div>
+            
 
-        <section>
-            <div id="weekdiv" class="col-md-6">
-                <div>
-                    <span class="weeks">0</span>
-                    <div class="smalltext">Weeks</div>
+            
+                <div id="weekdiv" class="col-md-4 col-md-offset-1">
+                    <div>
+                        <span class="weeks">0</span>
+                        <div class="smalltext">Weeks</div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!--Salary and other things that increments as weeks go by-->
-        <section>
+        
+        <div class="row">
+            <section>
+                <div id="friends" class="col-md-1">
+                    <h3>Friends</h3>
+                    <select name="friendList" id="friendList" size="5">
+                        <option value="friend1">Bob : <span id="friend1">$0</span></option>
+                        <option value="friend2">Sally : <span id="friend2">$0</span></option>
+                        <option value="friend3">Peter : <span id="friend3">$0</span></option>
+                        <option value="friend4">Greg : <span id="friend4">$0</span></option>
+                        <option value="friend5">Bonnie : <span id="friend5">$0</span></option>
+                    </select>
+                </div>
+            </section>
+
+            <section id="images">
+                <div id="food" >
+                    <div class="col-md-1 col-md-offset-1">
+                        <img src="img/food.jpg" width="100px"/>
+                        <img id="house" src="img/house.png" width="100px"/>
+                    </div>
+                    <div class="col-md-4 col-md-offset-1" id="hideFood" style="visibility: hidden;">
+                        <div>
+                            <label>Food cost: </label>
+                            <input type="text" id="foodCost" placeholder="dollars"/>
+                            <button onclick="submitFood()" id="foodSubmitButton">Submit!</button>
+                            <div id="afterFoodSubmit"></div>
+                        </div>
+                        <div id="housing">
+                            <label>House cost: </label>
+                            <input type="text" id="houseCost" placeholder="dollars"/>
+                            <button onclick="submitHouse()" id="houseSubmitButton">Submit!</button>
+                            <div id="afterHouseSubmit"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section id="events">
+                <div class="col-md-4">
+                    <select name="options" id="options">
+                        <option value="option1" id="option1">Brand New Shoes : $200</option>
+                        <option value="option2" id="option2">Job Change : Your income decreases by 20%</option>
+                        <option value="option3" id="option3">New Iphone : $500</option>
+                        <option value="option4" id="option4">Won a lottery : $1000</option>
+                        <option value="option5" id="option5">Nothing happened!</option>
+                    </select>
+                    <button onclick="optionSubmit()" id=optionSubmit>Submit Event!</button>
+                </div>
+            </section>
+        </div>
 
 
-
-        </section>
 
         <script src=" http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js "></script>
             <script>

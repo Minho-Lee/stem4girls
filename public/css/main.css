@@ -42,7 +42,7 @@
 h4 {
     font-size: 18px;
     font-weight: 400;
-    color: #fff;
+    color: black;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -250,7 +250,6 @@ h3 {
     font-size: 15px;
     text-transform: uppercase;
     color: black;
-    text-align: center;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -786,7 +785,7 @@ end success-stories
 
 /*#a8c0f3*/
 body{
-    text-align: center;
+    /*text-align: center;*/
     background: #deedf7;
     font-family: sans-serif;
     font-weight: 100;
@@ -804,7 +803,6 @@ h1{
     color: #fff;
     display: inline-block;
     font-weight: 100;
-    text-align: center;
     font-size: 30px;
 }
 
@@ -822,9 +820,51 @@ h1{
     display: inline-block;
 }
 
-
-
 .smalltext{
     padding-top: 5px;
     font-size: 16px;
 }
+
+#friendList {
+    width: 100px;
+    color: black;
+}
+
+#images{
+    padding-top: 30px;
+}
+
+#housing {
+    padding-top: 90px;
+    position: absolute;
+}
+
+#afterFoodSubmit{
+    position: absolute;
+    z-index: -2;
+}
+
+#house {
+    padding-top: 15px;
+}
+
+#hideFood {
+    padding-top: 15px;
+}
+.centered {
+    text-align: center;
+}
+
+#events{
+    padding-top: 15px;
+}
+
+#options {
+    width: 300px;
+    color: black;
+}
+
+label {
+    color: black;
+}
+
