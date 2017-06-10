@@ -24,10 +24,7 @@ app.use(cookieParser());
 //app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'jade');
 
-app.use(express.static(__dirname + '/public'));
-
-
-app.get('/', function(req, res) {
+app.get('/', function(req, res, next) {
 	res.render('index.html', { title: 'Stem4Girls' });
 });
 

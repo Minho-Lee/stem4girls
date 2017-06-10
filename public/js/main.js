@@ -40,6 +40,17 @@ function initializeClock(id, endtime) {
       if (houseCounter === true) {
         balanceUpdate('minus', houseCost);
       }
+      if ((weekCounter === startWeek + 10) & (investCounter === true)) {
+        if (investSuccess) {
+          investUpdate.html("<h3>Investment Successful! You earned $" + investReturn + "</h3>");
+          balanceUpdate('add', investReturn);
+        } else {
+          investUpdate.html("<h3>Invest Unsuccessful :( You lost your $1000</h3>");
+        } 
+        investmentButton.disabled = false;
+        investmentButton.innerHTML = "Submit";
+        $('#afterInvestSubmit').empty();
+      }
       currentBalance.html('<h2>You currently have: $' + Math.round(parseFloat(balance)*100) / 100 + '</h2>');
       weeksSpan.innerHTML = weekCounter;
       deadline = new Date(Date.parse(new Date()) + 0.00006 * 24 * 60 * 60 * 1000);
@@ -51,17 +62,16 @@ function initializeClock(id, endtime) {
   var timeinterval = setInterval(updateClock, 1000);
 }
 
-function submitSalary(){
+$('#submitSalary').click(function() {
   var salary = document.getElementById('salary');
   var submitButton = document.getElementById('submitSalary');
-  var hideFood = document.getElementById('hideFood');
   if (isNaN(salary.value)) {
     $('#afterSubmit').html('<h3>Invalid Entry! Please Enter A Number!</h3>');
   } else {
     if (regexp.test(salary.value) === true) {
       submitButton.disabled = true;
       submitButton.innerHTML = "Submitted!"
-      hideFood.style.visibility = "visible";
+      initialHide.fadeIn(2000);
       salary.disabled = true;
       salaryValue = salary.value;
       $('#afterSubmit').html('<h3>Your bi-weekly salary is : $' + salaryValue + '</h3>');
@@ -72,10 +82,27 @@ function submitSalary(){
     } else {
       $('#afterSubmit').html('<h3>Invalid Entry! Please Enter A Valid Number! (XXX.XX format)</h3>');
     }
-    
   }
-  //console.log($("#salary").val()); 
-}
+  //hiding the salary section after a certain time
+  var id = setInterval(function() {
+    seconds++;
+    if (seconds >= 5) {
+      clearInterval(id);
+      //alert('Total time: ' + seconds + ' seconds');
+      var elems = document.querySelectorAll('.salaryHide');
+      for (var i = 0; i < elems.length; ++i) {
+        //elems[i].innerHTML = "";
+        elems[i].style.display = "none";
+      }
+      var transition = $('#transition');
+      transition.html("<h1>Start!</h1>");
+      /*$('#salaryInput').css(
+        'padding-top: -70px'
+      );*/
+      seconds = 0;
+    }
+  }, 1000);
+});
 
 function submitFood() {
   foodCost = $('#foodCost').val();
@@ -144,11 +171,85 @@ function optionSubmit() {
   currentBalance.html('<h2>You currently have: $' + Math.round(parseFloat(balance)*100) / 100 + '</h2>');
 }
 
+$('#investmentSubmit').click(function() {
+  if (balance < 1000) {
+    $('#afterInvestSubmit').html('<h4>Not enough balance!</h4>');
+  } else {
+    startWeek = weekCounter;
+    var investments = $('#investments');
+    var investChoice = "";
+    var randNum = Math.floor((Math.random() * 100) + 1);
+    if (investments.val() === 'invest1') {
+      balanceUpdate('minus', 1000);
+      investChoice = 'one';
+      investSuccess = true;
+      investReturn = 1200;
+    } else if (investments.val() === 'invest2') {
+      balanceUpdate('minus', 1000);
+      investChoice = 'two';
+      if (randNum <= 80) {
+        investSuccess = true;
+        investReturn = 1500;
+      } else {
+        investSuccess = false;
+        investReturn = 0;
+      }
+    } else if (investments.val() === 'invest3') {
+      balanceUpdate('minus', 1000);
+      investChoice = 'three';
+      if (randNum <= 60) {
+        investSuccess = true;
+        investReturn = 1800;
+      } else {
+        investSuccess = false;
+        investReturn = 0;
+      }
+    } else if (investments.val() === 'invest4') {
+      balanceUpdate('minus', 1000);
+      investChoice = 'four';
+      if (randNum <= 50) {
+        investSuccess = true;
+        investReturn = 2000;
+      } else {
+        investSuccess = false;
+        investReturn = 0;
+      }
+    } else if (investments.val() === 'invest5') {
+      balanceUpdate('minus', 1000);
+      investChoice = 'five';
+      if (randNum <= 30) {
+        investSuccess = true;
+        investReturn = 2500;
+      } else {
+        investSuccess = false;
+        investReturn = 0;
+      }
+    }
+    investCounter = true;
+    investUpdate.html('<h3>You chose investment option ' + investChoice + '! Balance of $1000 deducted, result will show in 10 weeks!');
+    investmentButton.disabled = true;
+    investmentButton.innerHTML = "Invested!";
+    $('#afterInvestSubmit').html('<h4>Submitted!</h4>');
+    currentBalance.html('<h2>You currently have: $' + Math.round(parseFloat(balance)*100) / 100 + '</h2>');
+  }
+});
+
+$(document).ready(function(){
+  initialHide.hide();
+  //initialHide.show();
+});
+
+var seconds = 0;
+var investmentButton = document.getElementById('investmentSubmit');
+var initialHide = $('.initialHide');
 var currentBalance = $('#currentBalance');
 var foodExpense = $('#foodExpense');
 var houseExpense = $('#houseExpense');
 var eventUpdate = $('#eventUpdate');
-var houseCounter = false, foodCounter = false;
+var investUpdate = $('#investmentUpdate');
+var houseCounter = false, foodCounter = false, investCounter = false;
+var investSuccess = false;
+var investReturn = 0;
 var t = 0;
 var regexp = /^\d+\.?\d{0,2}$/;
 var foodCost, houseCost = 0;
@@ -156,3 +257,4 @@ var balance = 0;
 var salaryValue = 0;
 var weekCounter = 0;
 var deadline = 0;
+var startWeek = 0;
