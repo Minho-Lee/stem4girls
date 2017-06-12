@@ -237,7 +237,30 @@ $('#investmentSubmit').click(function() {
 $(document).ready(function(){
   initialHide.hide();
   //initialHide.show();
+  $('#friends').hide();
+  $(window).scroll(function() {
+    if (($('body').scrollTop() > 150) || (document.documentElement.scrollTop > 150)) {
+      //$("#myBtn1").css("display", "block");
+      $('#myBtn1').fadeIn(1000);
+    } else {
+      //$("#myBtn1").css("display", "none");
+      $('#myBtn1').fadeOut(1000);
+    };
+  });
+
+  $('#myBtn1').on('click', function() {
+    $('body').scrollTop('0'); //For Chrome, Safari and Opera
+    document.documentElement.scrollTop = 0; // For IE and Firefox
+  });
+
+  $("#myBtn2").on('click', function() {
+    $('html, body').animate({
+      scrollTop: $('#placeholder1').offset().top
+    }, 2000);
+  });
 });
+
+
 
 var seconds = 0;
 var investmentButton = document.getElementById('investmentSubmit');
