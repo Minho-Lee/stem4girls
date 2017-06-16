@@ -62,6 +62,16 @@ function initializeClock(id, endtime) {
   var timeinterval = setInterval(updateClock, 1000);
 }
 
+//scroll to any given div
+function goToByScroll(id){
+  // Remove "link" from the ID
+  id = id.replace("link", "");
+  // Scroll
+  $('html, body').animate({
+      scrollTop: $("#"+id).offset().top},
+      'slow');
+}
+
 $('#submitSalary').click(function() {
   var salary = document.getElementById('salary');
   var submitButton = document.getElementById('submitSalary');
@@ -83,6 +93,8 @@ $('#submitSalary').click(function() {
       $('#afterSubmit').html('<h3>Invalid Entry! Please Enter A Valid Number! (XXX.XX format)</h3>');
     }
   }
+  goToByScroll('weekdiv');
+
   //hiding the salary section after a certain time
   var id = setInterval(function() {
     seconds++;
@@ -94,8 +106,7 @@ $('#submitSalary').click(function() {
         //elems[i].innerHTML = "";
         elems[i].style.display = "none";
       }
-      var transition = $('#transition');
-      transition.html("<h1>Start!</h1>");
+      $('#transition').html("<h1>Start!</h1>");
       /*$('#salaryInput').css(
         'padding-top: -70px'
       );*/
@@ -103,6 +114,7 @@ $('#submitSalary').click(function() {
     }
   }, 1000);
 });
+
 
 function submitFood() {
   foodCost = $('#foodCost').val();
@@ -154,6 +166,14 @@ function optionSubmit() {
   if (options.val() === 'option1') {
     balanceUpdate('minus', 200);
     eventUpdate.html('<h3>You bought brand new shoes! Spent $200.</h3>');
+
+    shoeCounter++;
+    if (shoeCounter === 1) {
+      $('#hideShoes').fadeIn(2000);
+    } else {
+      $('#multipleShoes').html('<h4> X ' + shoeCounter + '</h4>');
+    }
+
   } else if(options.val() === 'option2') { 
     salaryValue = salaryValue * 0.8;
     eventUpdate.html('<h3>You changed jobs! Decrease salary by 20%.</h3>');
@@ -161,6 +181,13 @@ function optionSubmit() {
   } else if(options.val() === 'option3') {
     balanceUpdate('minus', 500);
     eventUpdate.html('<h3>You bought a brand new phone! Spent $500</h3>');
+
+    phoneCounter++;
+    if (phoneCounter === 1) {
+      $('#hidePhone').fadeIn(2000);
+    } else {
+      $('#multiplePhones').html('<h4> X ' + phoneCounter + '</h4>');
+    }
   } else if(options.val() === 'option4') {
     balanceUpdate('add', 1000);
     eventUpdate.html('<h3>You won a lottery! Gained $1000</h3>');
@@ -168,7 +195,20 @@ function optionSubmit() {
     eventUpdate.html('<h3>Nothing happened</h3>');
     //do nothing
   }
+
+  ++i;
+  if (i%2 === 0) {
+    $('#afterEventSubmit').html('<h4>Event Submitted!</h4>');
+  }
+  else {
+    $('#afterEventSubmit').html('<h4>Submitted Event!</h4>');  
+  }
   currentBalance.html('<h2>You currently have: $' + Math.round(parseFloat(balance)*100) / 100 + '</h2>');
+
+  //adding owned item section
+  $("#ownedItems").fadeIn(2000);
+  //goToByScroll('hideShoes');
+
 }
 
 $('#investmentSubmit').click(function() {
@@ -234,8 +274,13 @@ $('#investmentSubmit').click(function() {
   }
 });
 
+//load the window to the top once refreshed or reset
+$(window).on('beforeunload', function(){
+  $(window).scrollTop(0);
+});
+
 $(document).ready(function(){
-  initialHide.hide();
+  $('.initialHide, #ownedItems, #hideShoes, #hidePhone').hide();
   //initialHide.show();
   $('#friends').hide();
   $(window).scroll(function() {
@@ -262,6 +307,18 @@ $(document).ready(function(){
 
 
 
+$(function() {
+    $('.confirm').click(function(e) {
+        e.preventDefault();
+        if (window.confirm("Are you sure?")) {
+          location.reload();
+          $(window).scrollTop(0);
+        }
+    });
+});
+
+
+var shoeCounter = 0, phoneCounter = 0;
 var seconds = 0;
 var investmentButton = document.getElementById('investmentSubmit');
 var initialHide = $('.initialHide');
@@ -273,7 +330,7 @@ var investUpdate = $('#investmentUpdate');
 var houseCounter = false, foodCounter = false, investCounter = false;
 var investSuccess = false;
 var investReturn = 0;
-var t = 0;
+var t = 0, i = 0;
 var regexp = /^\d+\.?\d{0,2}$/;
 var foodCost, houseCost = 0;
 var balance = 0;

@@ -22,23 +22,40 @@
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
     </head>
     <body>
-        <nav class="navbar navbar-light bg-faded navbar-fixed-left">
-            <form class="form-inline">
-                <div class="row">
-                    <button class="btn btn-success btn-md" type="button">Home</button>
-                </div>
-                <div class="row">
-                    <button class="btn btn-info btn-md" type="button"><a id="links" href="http://www.stem4girls.org/" target="_tab">About</a></button>
-                </div>
-                <div class="row">
-                    <button class="btn btn-primary btn-md" type="button" id="myBtn2">Temp</button>
-                </div>
-            </form>
-        </nav>
-    
+        <div class="dropdown" style="float:left">
+          <button class="dropbtn">Menu</button>
+          <div class="dropdown-content">
+            <button class="btn btn-success btn-md" type="button">Home</button>
+            
+            <button class="btn btn-info btn-md" type="button"><a id="links" href="http://www.stem4girls.org/" target="_tab">About</a></button>
+            
+            <button class="btn btn-primary btn-md" type="button" id="myBtn2">Scroll</button>
+            
+            <!--button class="btn btn-warning btn-md" type="button" onClick="window.location.reload()">Reset</button-->   
+
+            <button class="btn btn-warning btn-md confirm" type="button">Reset</button>   
+            
+            <button class="btn btn-danger btn-md" type="button" id="loginButton">Login</button>
+
+          </div>
+        </div>
+
         <div class="container">
+    
+        <!--div class="container"-->
             <div class="well well-md">
-                <h1 class="centered"><font color="#008673"/>Learn to Save!</h1>
+                <!--h1 class="centered"><font color="#008673"/>Learn to Save!
+                    
+                </h1-->
+                <div id="content">
+            
+                    <div class="help-tip">
+                        <p>The purpose of this game is to earn the most amount of money by the end of the allotted time frame. Have a fun and friendly competition with your peers to see who can make more!</p>
+                    </div>
+                    <p><h1 class="centered"><font color="#008673"/>Learn to Save!</h1></p>
+
+                </div>
+                
                 <!--div class="rainbow-text">
                     <div class="title-text">
                         <span class="letters" id="a1">L</span>
@@ -78,7 +95,7 @@
                     </div>
                 </div>
 
-                <section>
+                <div class="row">
                     <div class="row justify-content-around">
                         <div id="clockdiv" class="col-md-6 col-md-offset-1">
                           <div>
@@ -108,10 +125,10 @@
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
 
                 
-                <div class="row">
+                <!--div class="row">
                     <section>
                         <div id="friends" class="col-md-1">
                             <h3>Friends</h3>
@@ -124,33 +141,24 @@
                             </select>
                         </div>
                     </section>
+                </div-->
 
-                    <section id="images">
-                        <div id="food" >
-                            <div class="col-md-1 col-md-offset-1">
-                                <img src="img/food.jpg" width="100px"/>
-                                <img id="house" src="img/house.png" width="100px"/>
-                            </div>
-                            <div class="col-md-4 col-md-offset-1 initialHide">
-                                <div>
-                                    <label>Food cost: </label>
-                                    <input type="text" id="foodCost" placeholder="dollars"/>
-                                    <button onclick="submitFood()" id="foodSubmitButton">Submit!</button>
-                                    <div id="afterFoodSubmit"></div>
-                                </div>
-                                <div id="housing">
-                                    <label>House cost: </label>
-                                    <input type="text" id="houseCost" placeholder="dollars"/>
-                                    <button onclick="submitHouse()" id="houseSubmitButton">Submit!</button>
-                                    <div id="afterHouseSubmit"></div>
-                                </div>
-
-                            </div>
+                <!--ROW 1 for food and events-->
+                <div class="row">
+                    <section id="food" class="initialHide">
+                        <div class="col-md-1 col-md-offset-1">
+                            <img class="img-rounded" src="img/food.jpg" width="100px"/>
+                        </div>
+                        <div class="col-md-4 col-md-offset-1">
+                            <label>Food cost: </label>
+                            <input type="text" id="foodCost" placeholder="dollars"/>
+                            <button onclick="submitFood()" id="foodSubmitButton">Submit!</button>
+                            <div id="afterFoodSubmit"></div>
                         </div>
                     </section>
 
-                    <section id="events">
-                        <div class="col-md-4 initialHide">
+                    <section id="events" class="initialHide">
+                        <div class="col-md-5">
                             <div>
                                 <select name="options" id="options">
                                     <option value="option1" id="option1">Brand New Shoes : $200</option>
@@ -160,25 +168,73 @@
                                     <option value="option5" id="option5">Nothing happened!</option>
                                 </select>
                                 <button onclick="optionSubmit()" id=optionSubmit>Submit Event!</button>
-                            </div>
-                            <div id="investment-section">
-                                <label>Investments: (takes effect after 10 weeks!)</label>
-                                <select name="investments" id="investments">
-                                    <option value="invest1" id="invest1">Invest $1000, 100% chance to make it $1200 </option>
-                                    <option value="invest2" id="invest2">Invest $1000, 80% chance to make it $1500</option>
-                                    <option value="invest3" id="invest3">Invest $1000, 60% chance to make it $1800</option>
-                                    <option value="invest4" id="invest4">Invest $1000, 50% chance to make it $2000</option>
-                                    <option value="invest5" id="invest5">Invest $1000, 30% chance to make $2500</option>
-                                </select>
-                                <button id="investmentSubmit">Submit Investment!</button>
-                                <div id="afterInvestSubmit"></div>
-                                
+                                <div id="afterEventSubmit"></div>
                             </div>
                         </div>
                     </section>
                 </div>
+
+                <!--ROW 2 FOR HOUSING AND INVESTMENTS-->
+                <div class="row">
+                    <section id="housing" class="initialHide">
+                        <div class="col-md-1 col-md-offset-1">
+                            <img class="img-rounded" id="house" src="img/house.png" width="100px"/>
+                        </div>
+                        <div class="col-md-4 col-md-offset-1">
+                            <div>
+                                <label>House cost: </label>
+                                <input type="text" id="houseCost" placeholder="dollars"/>
+                                <button onclick="submitHouse()" id="houseSubmitButton">Submit!</button>
+                                <div id="afterHouseSubmit"></div>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="col-md-5 initialHide">
+                        <section id="investment-section">
+                            <label>Investments: (takes effect after 10 weeks!)</label>
+                            <select name="investments" id="investments">
+                                <option value="invest1" id="invest1">Invest $1000, 100% chance to make it $1200 </option>
+                                <option value="invest2" id="invest2">Invest $1000, 80% chance to make it $1500</option>
+                                <option value="invest3" id="invest3">Invest $1000, 60% chance to make it $1800</option>
+                                <option value="invest4" id="invest4">Invest $1000, 50% chance to make it $2000</option>
+                                <option value="invest5" id="invest5">Invest $1000, 30% chance to make $2500</option>
+                            </select>
+                            <button id="investmentSubmit">Submit Investment!</button>
+                            <div id="afterInvestSubmit"></div>
+                        </section>
+                    </div>
+                </div>
+
+                <section id="ownedItems">
+                    <h3>Owned Items:</h3>
+                    <div class="row initialHide">
+                        <div id="hideShoes">
+                            <div class="col-md-2 col-md-offset-1">
+                                <img class="img-rounded" src="img/shoe_icon.png" width="100px"/>
+                            </div>
+                            <div class="col-md-1">
+                                <span id="multipleShoes"></span>
+                            </div>
+                        </div>
+
+                        <div id="hidePhone">
+                            <div class="col-md-2 col-md-offset-1">
+                                <img class="img-rounded" src="img/phone_icon.png" width="100px"/>
+                            </div>
+                            <div class="col-md-1">
+                                <span id="multiplePhones"></span>
+                            </div>
+                        </div>
+                        <!--/section-->
+                    </div>
+                </section>
+            <!--well end-->
             </div>
+        <!--container end-->
         </div>
+
+
+
 
         <div id="placeholder1"></div>
 

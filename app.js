@@ -5,7 +5,9 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-
+var cfenv = require('cfenv');
+var Cloudant = require('cloudant');
+var fs = require('fs');
 
 // cfenv provides access to your Cloud Foundry environment
 // for more info, see: https://www.npmjs.com/package/cfenv
@@ -20,9 +22,101 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+//setting up cloudant
+var cloudant_url = 'https://34472626-3368-4635-ab44-90934808150e-bluemix:7b0e135776c9e8092769a8de9c1a567220d86c29ce7dc684ac87b9f1acf1180c@34472626-3368-4635-ab44-90934808150e-bluemix.cloudant.com';
+var services = JSON.parse(process.env.VCAP_SERVICES || "{}");
+// Check if services are bound to your project
+if (process.env.VCAP_SERVICES) {
+    services = JSON.parse(process.env.VCAP_SERVICES);
+    if (services.cloudantNoSQLDB) //Check if cloudantNoSQLDB service is bound to your project
+    {
+        cloudant_url = services.cloudantNoSQLDB[0].credentials.url; //Get URL and other paramters
+        console.log("Name = " + services.cloudantNoSQLDB[0].name);
+        console.log("URL = " + services.cloudantNoSQLDB[0].credentials.url);
+        console.log("username = " + services.cloudantNoSQLDB[0].credentials.username);
+        console.log("password = " + services.cloudantNoSQLDB[0].credentials.password);
+    }
+}
+
+var cloudant = Cloudant({
+    url: cloudant_url
+});
+
+//Edit this variable value to change name of database.
+var dbname = 'users';
+var db;
+
+//Create database
+cloudant.db.create(dbname, function(err, data) {
+    db = cloudant.db.use(dbname);
+    if (err) //If database already exists
+        console.log("Database exists."); //NOTE: A Database can be created through the GUI interface as well
+    else {
+        console.log("Created database.");
+        db.insert({
+                _id: "_design/users",
+                views: {
+                    "users": {
+                        "map": "function (doc) {\n  emit(doc._id, [doc._rev, doc.userid]);\n}"
+                    }
+                }
+            },
+            function(err, data) {
+                if (err)
+                    console.log("View already exists. Error: ", err); //NOTE: A View can be created through the GUI interface as well
+                else
+                    console.log("users view has been created");
+            });
+    }
+});
+
+app.post('/insertUser', function(req, res) {
+    db.find({
+        selector: {
+            userid: req.body.userid
+        }
+    }, function(er, result) {
+        if (er) {
+            throw er;
+        }
+        eventNames = result.docs;
+        console.log('Found %d documents with name ' + req.query.msg, result.docs.length);
+
+        if (result.docs.length > 0) {
+            updatednotes = eventNames[0].notes;
+            updatednotes.push(req.body.note);
+
+
+            var user = {
+                'userid': eventNames[0].userid,
+                'notes': updatednotes,
+                '_id': eventNames[0]._id,
+                '_rev': eventNames[0]._rev
+            };
+
+            db.insert(user, function(err, body) {});
+        } else {
+            db.insert({
+                    'userid': req.body.userid,
+                    'users': [req.body.note]
+                },
+                function(err, data) {
+                    if (err)
+                        console.log("User already exists. Error: ", err); //NOTE: A View can be created through the GUI interface as well
+                    else
+                        console.log("User has been created");
+                });
+        }
+        res.send('User Saved.')
+    });
+})
+
 //app.set('view engine', 'ejs');
 //app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'jade');
+
+//app.engine('html', require('ejs').renderFile);
+//app.set('view engine', 'html');
 
 app.get('/', function(req, res, next) {
 	res.render('index.html', { title: 'Stem4Girls' });
