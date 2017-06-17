@@ -51,10 +51,30 @@ function initializeClock(id, endtime) {
         investmentButton.innerHTML = "Submit";
         $('#afterInvestSubmit').empty();
       }
-      currentBalance.html('<h2>You currently have: $' + Math.round(parseFloat(balance)*100) / 100 + '</h2>');
-      weeksSpan.innerHTML = weekCounter;
-      deadline = new Date(Date.parse(new Date()) + 0.00006 * 24 * 60 * 60 * 1000);
-      initializeClock('clockdiv', deadline);
+
+      //Check if the game is still going on (modify endWeek to change the ending)
+      if (weekCounter === endWeek) {
+        $('#currentBalance, .initialHide, #foodExpense, \
+            #houseExpense, #eventUpdate, #investmentUpdate, \
+            #afterSubmit, #ownedItems').hide('slow', function() {
+              daysSpan.innerHTML = '0';
+              hoursSpan.innerHTML = '00';
+              minutesSpan.innerHTML = '00';
+              secondsSpan.innerHTML = '00';
+              weeksSpan.innerHTML = weekCounter;
+              $("#gameover")
+                .html('<h1>Congrats! You finished the game with balance of $' + Math.round(parseFloat(balance)*100) / 100 + '</h1>')
+                .fadeIn(2000);
+            });
+
+      } else {
+        currentBalance.html('<h2>You currently have: $' + Math.round(parseFloat(balance)*100) / 100 + '</h2>');
+        weeksSpan.innerHTML = weekCounter;
+        deadline = new Date(Date.parse(new Date()) + 0.00006 * 24 * 60 * 60 * 1000);
+        initializeClock('clockdiv', deadline);
+      }
+
+      
     }
   }
 
@@ -280,7 +300,7 @@ $(window).on('beforeunload', function(){
 });
 
 $(document).ready(function(){
-  $('.initialHide, #ownedItems, #hideShoes, #hidePhone').hide();
+  $('.initialHide, #ownedItems, #hideShoes, #hidePhone, #gameover').hide();
   //initialHide.show();
   $('#friends').hide();
   $(window).scroll(function() {
@@ -317,7 +337,6 @@ $(function() {
     });
 });
 
-
 var shoeCounter = 0, phoneCounter = 0;
 var seconds = 0;
 var investmentButton = document.getElementById('investmentSubmit');
@@ -337,4 +356,4 @@ var balance = 0;
 var salaryValue = 0;
 var weekCounter = 0;
 var deadline = 0;
-var startWeek = 0;
+var startWeek = 0, endWeek=52;

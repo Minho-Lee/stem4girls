@@ -951,9 +951,17 @@ a {
     z-index: 102;
 }
 
-.dropdown-content [type=button] {
+.dropdown-content [type=button] , .dropdown-content a{
   border-radius: 0 !important;
   width: 75px;
+}
+
+.modal-body h3{
+    padding-left: 20px;
+}
+
+#gameover h1{
+    color: black;
 }
 
 /* Links inside the dropdown */
