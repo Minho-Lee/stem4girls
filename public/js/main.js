@@ -21,6 +21,11 @@ function initializeClock(id, endtime) {
   var secondsSpan = clock.querySelector('.seconds');
 
   function updateClock() {
+    var user = $('#username').val();
+    if (user === "admin123") {
+      adminMode = true;
+    }
+    
     t = getTimeRemaining(endtime);
 
     daysSpan.innerHTML = t.days;
@@ -53,7 +58,7 @@ function initializeClock(id, endtime) {
       }
 
       //Check if the game is still going on (modify endWeek to change the ending)
-      if (weekCounter === endWeek) {
+      if (weekCounter === endWeek || adminMode === true) {
         $('#currentBalance, .initialHide, #foodExpense, \
             #houseExpense, #eventUpdate, #investmentUpdate, \
             #afterSubmit, #ownedItems').hide('slow', function() {
@@ -63,8 +68,9 @@ function initializeClock(id, endtime) {
               secondsSpan.innerHTML = '00';
               weeksSpan.innerHTML = weekCounter;
               $("#gameover")
-                .html('<h1>Congrats! You finished the game with balance of $' + Math.round(parseFloat(balance)*100) / 100 + '</h1>')
+                .html('<h1>Congrats! You finished the game with balance of <b>$' + Math.round(parseFloat(balance)*100) / 100 + '</b></h1>')
                 .fadeIn(2000);
+              activate();
             });
 
       } else {
@@ -325,8 +331,6 @@ $(document).ready(function(){
   });
 });
 
-
-
 $(function() {
     $('.confirm').click(function(e) {
         e.preventDefault();
@@ -337,6 +341,8 @@ $(function() {
     });
 });
 
+var adminMode = false;
+var fireworks = false;
 var shoeCounter = 0, phoneCounter = 0;
 var seconds = 0;
 var investmentButton = document.getElementById('investmentSubmit');
