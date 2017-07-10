@@ -7,4 +7,4 @@ applications:
   host: stem4girls
   disk_quota: 1024M
   services:
-  - Cloudant NoSQL DB-stem4girls
+  - stem4girls
