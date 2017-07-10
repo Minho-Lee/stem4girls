@@ -8,6 +8,7 @@ var cookieParser = require('cookie-parser');
 var cfenv = require('cfenv');
 var Cloudant = require('cloudant');
 var fs = require('fs');
+var cons = require('consolidate');
 
 // cfenv provides access to your Cloud Foundry environment
 // for more info, see: https://www.npmjs.com/package/cfenv
@@ -22,6 +23,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+app.engine('html', cons.swig);
+app.set('view engine', 'html');
 //setting up cloudant
 var cloudant_url = 'https://34472626-3368-4635-ab44-90934808150e-bluemix:7b0e135776c9e8092769a8de9c1a567220d86c29ce7dc684ac87b9f1acf1180c@34472626-3368-4635-ab44-90934808150e-bluemix.cloudant.com';
 var services = JSON.parse(process.env.VCAP_SERVICES || "{}");
