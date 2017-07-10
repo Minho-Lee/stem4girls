@@ -70,7 +70,6 @@ function initializeClock(id, endtime) {
               $("#gameover")
                 .html('<h1>Congrats! You finished the game with balance of <b>$' + Math.round(parseFloat(balance)*100) / 100 + '</b></h1>')
                 .fadeIn(2000);
-              activate();
             });
 
       } else {
@@ -83,7 +82,6 @@ function initializeClock(id, endtime) {
       
     }
   }
-
   updateClock();
   var timeinterval = setInterval(updateClock, 1000);
 }
@@ -98,9 +96,9 @@ function goToByScroll(id){
       'slow');
 }
 
-$('#submitSalary').click(function() {
-  var salary = document.getElementById('salary');
-  var submitButton = document.getElementById('submitSalary');
+/*$('#submitSalary').click(function() {
+  //var salary = document.getElementById('salary');
+  //var submitButton = document.getElementById('submitSalary');
   if (isNaN(salary.value)) {
     $('#afterSubmit').html('<h3>Invalid Entry! Please Enter A Number!</h3>');
   } else {
@@ -121,7 +119,7 @@ $('#submitSalary').click(function() {
   }
   goToByScroll('weekdiv');
 
-  //hiding the salary section after a certain time
+  hiding the salary section after a certain time
   var id = setInterval(function() {
     seconds++;
     if (seconds >= 5) {
@@ -133,13 +131,10 @@ $('#submitSalary').click(function() {
         elems[i].style.display = "none";
       }
       $('#transition').html("<h1>Start!</h1>");
-      /*$('#salaryInput').css(
-        'padding-top: -70px'
-      );*/
       seconds = 0;
     }
   }, 1000);
-});
+});*/
 
 
 function submitFood() {
@@ -306,7 +301,7 @@ $(window).on('beforeunload', function(){
 });
 
 $(document).ready(function(){
-  $('.initialHide, #ownedItems, #hideShoes, #hidePhone, #gameover').hide();
+  $('#ownedItems, #hideShoes, #hidePhone, #gameover').hide();
   //initialHide.show();
   $('#friends').hide();
   $(window).scroll(function() {
@@ -319,7 +314,15 @@ $(document).ready(function(){
     };
   });
 
+  $('#afterSubmit').html('<h3>Your bi-weekly salary is : $' + salaryValue + '</h3>');
+  currentBalance.html('<h2>You currently have: $0</h2>');
+  deadline = new Date(Date.parse(new Date()) + 0.00006 * 24 * 60 * 60 * 1000);
+  initializeClock('clockdiv', deadline); 
+  //goToByScroll('weekdiv');
+
+
   $('#myBtn1').on('click', function() {
+    goToByScroll('main_container');
     $('body').scrollTop('0'); //For Chrome, Safari and Opera
     document.documentElement.scrollTop = 0; // For IE and Firefox
   });
@@ -342,7 +345,6 @@ $(function() {
 });
 
 var adminMode = false;
-var fireworks = false;
 var shoeCounter = 0, phoneCounter = 0;
 var seconds = 0;
 var investmentButton = document.getElementById('investmentSubmit');
@@ -359,7 +361,7 @@ var t = 0, i = 0;
 var regexp = /^\d+\.?\d{0,2}$/;
 var foodCost, houseCost = 0;
 var balance = 0;
-var salaryValue = 0;
+var salaryValue = 500; //fixed salary value
 var weekCounter = 0;
 var deadline = 0;
 var startWeek = 0, endWeek=52;
