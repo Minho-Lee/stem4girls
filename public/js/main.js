@@ -45,7 +45,7 @@ function initializeClock(id, endtime) {
       if (houseCounter === true) {
         balanceUpdate('minus', houseCost);
       }
-      if ((weekCounter === startWeek + 10) & (investCounter === true)) {
+      if ((weekCounter === startWeek + 6) & (investCounter === true)) {
         if (investSuccess) {
           investUpdate.html("<h3>Investment Successful! You earned $" + investReturn + "</h3>");
           balanceUpdate('add', investReturn);
@@ -54,8 +54,9 @@ function initializeClock(id, endtime) {
         } 
         investmentButton.disabled = false;
         investmentButton.innerHTML = "Submit";
+        investCounter === false;
         $('#afterInvestSubmit').empty();
-      }
+      } 
 
       //Check if the game is still going on (modify endWeek to change the ending)
       if (weekCounter === endWeek || adminMode === true) {
@@ -68,11 +69,14 @@ function initializeClock(id, endtime) {
               secondsSpan.innerHTML = '00';
               weeksSpan.innerHTML = weekCounter;
               $(".salaryHide").slideUp('slow');
+              if (investCounter === true) {
+                $("#verbiage").html("<h4>Your investment of $100 came back because the game is over!");
+                balance += 100;
+              };
               $("#gameover")
                 .html('<h1>Congrats! You finished the game with balance of <b>$' + Math.round(parseFloat(balance)*100) / 100 + '</b></h1>')
                 .fadeIn(2000);
             });
-
       } else {
         currentBalance.html('<h2>You currently have: $' + Math.round(parseFloat(balance)*100) / 100 + '</h2>');
         weeksSpan.innerHTML = weekCounter;
@@ -263,7 +267,7 @@ function optionSubmit() {
 }
 
 $('#investmentSubmit').click(function() {
-  if (balance < 1000) {
+  if (balance < 100) {
     $('#afterInvestSubmit').html('<h4>Not enough balance!</h4>');
   } else {
     startWeek = weekCounter;
@@ -271,46 +275,46 @@ $('#investmentSubmit').click(function() {
     var investChoice = "";
     var randNum = Math.floor((Math.random() * 100) + 1);
     if (investments.val() === 'invest1') {
-      balanceUpdate('minus', 1000);
+      balanceUpdate('minus', 100);
       investChoice = 'one';
       investSuccess = true;
-      investReturn = 1200;
+      investReturn = 120;
     } else if (investments.val() === 'invest2') {
-      balanceUpdate('minus', 1000);
+      balanceUpdate('minus', 100);
       investChoice = 'two';
       if (randNum <= 80) {
         investSuccess = true;
-        investReturn = 1500;
+        investReturn = 150;
       } else {
         investSuccess = false;
         investReturn = 0;
       }
     } else if (investments.val() === 'invest3') {
-      balanceUpdate('minus', 1000);
+      balanceUpdate('minus', 100);
       investChoice = 'three';
       if (randNum <= 60) {
         investSuccess = true;
-        investReturn = 1800;
+        investReturn = 180;
       } else {
         investSuccess = false;
         investReturn = 0;
       }
     } else if (investments.val() === 'invest4') {
-      balanceUpdate('minus', 1000);
+      balanceUpdate('minus', 100);
       investChoice = 'four';
       if (randNum <= 50) {
         investSuccess = true;
-        investReturn = 2000;
+        investReturn = 200;
       } else {
         investSuccess = false;
         investReturn = 0;
       }
     } else if (investments.val() === 'invest5') {
-      balanceUpdate('minus', 1000);
+      balanceUpdate('minus', 100);
       investChoice = 'five';
       if (randNum <= 30) {
         investSuccess = true;
-        investReturn = 2500;
+        investReturn = 250;
       } else {
         investSuccess = false;
         investReturn = 0;
