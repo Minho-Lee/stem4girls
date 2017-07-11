@@ -369,7 +369,7 @@ $("#loginsubmit").on('click', function() {
       success: function(res, status, xhr) {
         console.log("success! Type: "+ xhr.getResponseHeader("content-type"));
         console.log("status: " + status);
-        console.log(JSON.stringify(res));
+        alert(res);
       }
     })//ajax done
   };
@@ -394,6 +394,7 @@ var start = function() {
   initializeClock('clockdiv', deadline); 
 
 };
+
 var adminMode = false;
 var shoeCounter = 0, phoneCounter = 0, ringCounter = 0, dressCounter = 0, bagCounter = 0;
 var seconds = 0;

@@ -75,7 +75,7 @@ cloudant.db.create(dbname, function(err, data) {
 
 app.post('/insertUser', function(req, res) {
     var username = req.body.username;
-    console.log(username);
+    // console.log(username);
     db.find({
         selector: {
             'username' : username
@@ -85,18 +85,15 @@ app.post('/insertUser', function(req, res) {
             throw er;
         }
         eventNames = result.docs;
-        
         if (result.docs.length > 0) {
-            console.log(eventNames[0]);
+            //console.log(eventNames[0]);
             console.log('Found %d documents with name ' + eventNames[0].username, result.docs.length);
-            var session = eventNames[0].session;
-            console.log(session.number);
-            console.log(typeof session.number);
+            var session = eventNames[0].session, 
+                sessionNum = Object.keys(session).length;;
             session.push({
-                'number': (parseInt(session.number) + 1),
+                'number': sessionNum + 1,
                 'balance': 0
             });
-
 
             var user = {
                 'username': eventNames[0].username,
@@ -106,6 +103,8 @@ app.post('/insertUser', function(req, res) {
             };
 
             db.insert(user, function(err, body) {});
+            res.send('Welcome back ' + username + ' :)\nThis is your session #' + 
+                      (sessionNum + 1) +"!");
         } else {
             console.log('Unable to find '+ username);
             db.insert({
@@ -121,8 +120,8 @@ app.post('/insertUser', function(req, res) {
                     else
                         console.log("User has been created");
                 });
+            res.send('Welcome ' + username + ' :D\nThis is your first session!');
         }
-        res.send('User Saved.')
     });
 })
 
