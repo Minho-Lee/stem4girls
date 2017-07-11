@@ -15,7 +15,7 @@ function getTimeRemaining(endtime) {
 
 function initializeClock(id, endtime) {
   var clock = document.getElementById(id);
-  var daysSpan = clock.querySelector('.days');
+  //var daysSpan = clock.querySelector('.days');
   var hoursSpan = clock.querySelector('.hours');
   var minutesSpan = clock.querySelector('.minutes');
   var secondsSpan = clock.querySelector('.seconds');
@@ -28,7 +28,7 @@ function initializeClock(id, endtime) {
     
     t = getTimeRemaining(endtime);
 
-    daysSpan.innerHTML = t.days;
+    //daysSpan.innerHTML = t.days;
     hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
     minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
     secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
@@ -62,7 +62,7 @@ function initializeClock(id, endtime) {
         $('#currentBalance, .initialHide, #foodExpense, \
             #houseExpense, #eventUpdate, #investmentUpdate, \
             #afterSubmit, #ownedItems').hide('slow', function() {
-              daysSpan.innerHTML = '0';
+              //daysSpan.innerHTML = '0';
               hoursSpan.innerHTML = '00';
               minutesSpan.innerHTML = '00';
               secondsSpan.innerHTML = '00';
@@ -136,24 +136,48 @@ function goToByScroll(id){
   }, 1000);
 });*/
 
-
-function submitFood() {
-  foodCost = $('#foodCost').val();
-  foodSubmit = $('#foodSubmitButton');
-  if (isNaN(foodCost)) {
-    $('#afterFoodSubmit').html('<h4>Invalid Entry! Please Enter A Number!</h4>');
-    foodCounter = false;
+$("#foodSubmitButton").on('click', function() {
+  $food = $(".foodbtn.toggleFood");
+  if ($food.attr('id') === 'foodlow') {
+    foodCost = 100;
+  } else if ($food.attr('id') === 'foodmed') {
+    foodCost = 200;
+  } else if ($food.attr('id') === 'foodhigh') {
+    foodCost = 300;
   } else {
-    $('#afterFoodSubmit').html('<h4>Submitted!</h4>');
-    if (regexp.test(foodCost) === true) {
-      foodCounter = true;
-      foodExpense.html('<h3>Food Expense: $' + foodCost+ '</h3>');
-    } else {
-      $('#afterFoodSubmit').html('<h4>Invalid Entry! Please Enter A Valid Number! (XXX.XX format)</h4>');
-      foodCounter = false;
-    }
+    foodCost = -10;
   }
-}
+
+  if (foodCost > 0) {
+    foodCounter = true;
+    $("#foodoptions").fadeOut(2000);
+    $("#afterFoodSubmit").html("<h4>Submitted!</h4>");
+    foodExpense.html('<h3>Food option: ' + $food.attr('value') + 
+                    ' / Food Expense: $' + foodCost+ '</h3>');
+  } else {
+    foodCounter = false;
+    $("#afterFoodSubmit").html("<h4>Please select one of the options!");
+  }
+});
+
+// function submitFood() {
+//   $foodSubmit = $('#foodSubmitButton');
+  
+
+//   if (isNaN(foodCost)) {
+//     $('#afterFoodSubmit').html('<h4>Invalid Entry! Please Enter A Number!</h4>');
+//     foodCounter = false;
+//   } else {
+//     $('#afterFoodSubmit').html('<h4>Submitted!</h4>');
+//     if (regexp.test(foodCost) === true) {
+//       foodCounter = true;
+//       foodExpense.html('<h3>Food Expense: $' + foodCost+ '</h3>');
+//     } else {
+//       $('#afterFoodSubmit').html('<h4>Invalid Entry! Please Enter A Valid Number! (XXX.XX format)</h4>');
+//       foodCounter = false;
+//     }
+//   }
+// }
 
 function submitHouse() {
   houseCost = $('#houseCost').val();
@@ -320,6 +344,13 @@ $(document).ready(function(){
   initializeClock('clockdiv', deadline); 
   //goToByScroll('weekdiv');
 
+  $("#foodsubmit").find('button').on('click', function() {
+    $('.foodbtn').not(this).removeClass('toggleFood').data('clicked', false);
+    $(this).addClass('toggleFood').data('clicked', true);
+    // console.log($(this).data('clicked'));
+  });
+
+
 
   $('#myBtn1').on('click', function() {
     goToByScroll('main_container');
@@ -359,7 +390,7 @@ var investSuccess = false;
 var investReturn = 0;
 var t = 0, i = 0;
 var regexp = /^\d+\.?\d{0,2}$/;
-var foodCost, houseCost = 0;
+var foodCost = 0, houseCost = 0;
 var balance = 0;
 var salaryValue = 500; //fixed salary value
 var weekCounter = 0;

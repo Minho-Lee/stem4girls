@@ -838,14 +838,9 @@ h2 {
     padding-top: 30px;
 }
 
-#housing {
-    padding-top: 35px;
-    /*position: absolute;*/   
-}
-
-#food {
+/*#food, #housing {
     padding-top: 20px;
-}
+}*/
 
 #afterFoodSubmit{
     /*position: absolute;
@@ -856,8 +851,18 @@ h2 {
     /*padding-top: 35px;*/
 }
 
-#initialHide {
-    padding-top: 15px;
+.toggleFood {
+    background-color: #a0a0f9;
+    color: white;
+}
+
+.toggleFood:hover{
+    background-color: #6565f4;
+    color: white;
+}
+
+.initialHide {
+    padding-top: 20px;
 }
 .centered {
     text-align: center;
