@@ -80,7 +80,8 @@ function initializeClock(id, endtime) {
       } else {
         currentBalance.html('<h2>You currently have: $' + Math.round(parseFloat(balance)*100) / 100 + '</h2>');
         weeksSpan.innerHTML = weekCounter;
-        deadline = new Date(Date.parse(new Date()) + 0.00006 * 24 * 60 * 60 * 1000);
+        //deadline = new Date(Date.parse(new Date()) + 0.00006 * 24 * 60 * 60 * 1000);
+        deadline= new Date(Date.parse(new Date()) + 10000);
         initializeClock('clockdiv', deadline);
       }
     }
@@ -99,28 +100,7 @@ function goToByScroll(id){
       'slow');
 }
 
-/*$('#submitSalary').click(function() {
-  //var salary = document.getElementById('salary');
-  //var submitButton = document.getElementById('submitSalary');
-  if (isNaN(salary.value)) {
-    $('#afterSubmit').html('<h3>Invalid Entry! Please Enter A Number!</h3>');
-  } else {
-    if (regexp.test(salary.value) === true) {
-      submitButton.disabled = true;
-      submitButton.innerHTML = "Submitted!"
-      initialHide.fadeIn(2000);
-      salary.disabled = true;
-      salaryValue = salary.value;
-      $('#afterSubmit').html('<h3>Your bi-weekly salary is : $' + salaryValue + '</h3>');
-      currentBalance.html('<h2>You currently have: $0</h2>');
-      salary.value = "Entered!";
-      deadline = new Date(Date.parse(new Date()) + 0.00006 * 24 * 60 * 60 * 1000);
-      initializeClock('clockdiv', deadline);  
-    } else {
-      $('#afterSubmit').html('<h3>Invalid Entry! Please Enter A Valid Number! (XXX.XX format)</h3>');
-    }
-  }
-  goToByScroll('weekdiv');
+/*  goToByScroll('weekdiv');
 
   hiding the salary section after a certain time
   var id = setInterval(function() {
@@ -321,7 +301,7 @@ $('#investmentSubmit').click(function() {
       }
     }
     investCounter = true;
-    investUpdate.html('<h3>You chose investment option ' + investChoice + '! Balance of $1000 deducted, result will show in 10 weeks!');
+    investUpdate.html('<h3>You chose investment option ' + investChoice + '! Balance of $100 deducted, result will show in 6 weeks!');
     investmentButton.disabled = true;
     investmentButton.innerHTML = "Invested!";
     $('#afterInvestSubmit').html('<h4>Submitted!</h4>');
@@ -335,8 +315,8 @@ $(window).on('beforeunload', function(){
 });
 
 $(document).ready(function(){
-  //$('#events, #investment-section, #ownedItems, #hideShoes, #hidePhone, #gameover').hide();
-  $("#ownedItems, #hideShoes, #hideRing ,#hidePhone, #hideDress, #hidePurse, #gameover").hide();
+  $("#events, #investment-section, #ownedItems, \
+    #hideShoes, #hideRing ,#hidePhone, #hideDress, #hidePurse, #gameover").hide();
   //initialHide.show();
   $('#friends').hide();
   $(window).scroll(function() {
