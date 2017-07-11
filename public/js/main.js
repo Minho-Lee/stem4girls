@@ -45,7 +45,7 @@ function initializeClock(id, endtime) {
       if (houseCounter === true) {
         balanceUpdate('minus', houseCost);
       }
-      if ((weekCounter === startWeek + 6) & (investCounter === true)) {
+      if ((weekCounter === startWeek + 6) && (investCounter === true)) {
         if (investSuccess) {
           investUpdate.html("<h3>Investment Successful! You earned $" + investReturn + "</h3>");
           balanceUpdate('add', investReturn);
@@ -53,8 +53,8 @@ function initializeClock(id, endtime) {
           investUpdate.html("<h3>Invest Unsuccessful :( You lost your $1000</h3>");
         } 
         investmentButton.disabled = false;
-        investmentButton.innerHTML = "Submit";
-        investCounter === false;
+        investmentButton.innerHTML = "Submit Investment!";
+        investCounter = false;
         $('#afterInvestSubmit').empty();
       } 
 
@@ -85,8 +85,9 @@ function initializeClock(id, endtime) {
         initializeClock('clockdiv', deadline);
       }
     }
-  }
+  }//updateClock
   updateClock();
+  //this calls the updateClock() method every 1 second
   var timeinterval = setInterval(updateClock, 1000);
 }
 
@@ -370,7 +371,7 @@ var start = function() {
   $('#afterSubmit').html('<h3>Your bi-weekly salary is : $' + salaryValue + '</h3>').hide().slideDown(1500);
   currentBalance.fadeIn(2000).html('<h2>You currently have: $0</h2>').hide().slideDown(1500);
   $("#events, #investment-section").fadeIn(2000);
-  deadline = new Date(Date.parse(new Date()) + 0.00006 * 24 * 60 * 60 * 1000);
+  deadline = new Date(Date.parse(new Date()) + 10000);
   initializeClock('clockdiv', deadline); 
 
 };
