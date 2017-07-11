@@ -59,7 +59,7 @@ function initializeClock(id, endtime) {
 
       //Check if the game is still going on (modify endWeek to change the ending)
       if (weekCounter === endWeek || adminMode === true) {
-        $('#currentBalance, .initialHide, #foodExpense, \
+        $('#currentBalance, #housing, #food, #events, #investment-section, #foodExpense, \
             #houseExpense, #eventUpdate, #investmentUpdate, \
             #afterSubmit, #ownedItems').hide('slow', function() {
               //daysSpan.innerHTML = '0';
@@ -67,6 +67,7 @@ function initializeClock(id, endtime) {
               minutesSpan.innerHTML = '00';
               secondsSpan.innerHTML = '00';
               weeksSpan.innerHTML = weekCounter;
+              $(".salaryHide").slideUp('slow');
               $("#gameover")
                 .html('<h1>Congrats! You finished the game with balance of <b>$' + Math.round(parseFloat(balance)*100) / 100 + '</b></h1>')
                 .fadeIn(2000);
