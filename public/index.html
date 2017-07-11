@@ -67,31 +67,12 @@
                     
                 </h1-->
                 <div id="content">
-            
                     <div class="help-tip">
                         <p>The purpose of this game is to earn the most amount of money by the end of the allotted time frame. Have a fun and friendly competition with your peers to see who can make more!</p>
                     </div>
                     <p><h1 class="centered"><font color="#008673"/>Learn to Save!</h1></p>
-
                 </div>
                 
-                <!--div class="rainbow-text">
-                    <div class="title-text">
-                        <span class="letters" id="a1">L</span>
-                        <span class="letters" id="a2">e</span>
-                        <span class="letters" id="a3">a</span>
-                        <span class="letters" id="a4">r</span>
-                        <span class="letters" id="a5">n</span>
-                        &nbsp&nbsp&nbsp
-                        <span class="letters" id="a6">T</span>
-                        <span class="letters" id="a7">o</span>
-                        &nbsp&nbsp&nbsp
-                        <span class="letters" id="a8">S</span>
-                        <span class="letters" id="a9">a</span>
-                        <span class="letters" id="a10">v</span>
-                        <span class="letters" id="a11">e</span>
-                    </div>
-                </div-->
                 <div class="panel panel-success">
                     <div class="panel-heading centered" style="max-width: 10;">
                         <h3 class="salaryHide">The timer will start once you decide on which house to live and how fancy your dinner is!</h3>
@@ -113,7 +94,7 @@
                             <!--/form-->
                         </section>
                     </div>
-                </div>
+                </div><!--panel-->
 
                 <div class="row">
                     <div id="clockdiv" class="col-md-6 col-md-offset-1">
@@ -144,7 +125,7 @@
                         </div>
                     </div>
                     <!--days/hours/weeks end-->
-                </div>
+                </div><!--row-->
 
                 
                 <!--div class="row">
@@ -189,25 +170,37 @@
                     </section>
 
                     <section id="housing">
-                        <div class="col-sm-1">
+                        <div class="col-sm-1 text-center">
                             <img class="img-rounded" id="house" src="img/house.png" width="100px"/>
                         </div>
-                        <div class="col-sm-4 col-sm-offset-1">
-                            <div>
+                        <div class="col-sm-3 col-sm-offset-1">
+                            <div class="row">
                                 <label>House cost: </label>
-                                <input type="text" id="houseCost" placeholder="dollars"/>
-                                <button onclick="submitHouse()" id="houseSubmitButton">Submit!</button>
-                                <div id="afterHouseSubmit"></div>
                             </div>
+                            <div id="houseoptions">
+                                <form id="housesubmit" onsubmit='return false'>
+                                    <div class="row text-center">
+                                        <button id='houselow' class="btn btn-sm btn-info housebtn" value="cheap">cheap</button>
+                                        <button id='housemed' class="btn btn-sm btn-info housebtn" value="modern">modern</button>
+                                        <button id='househigh' class="btn btn-sm btn-info housebtn" value="luxury">luxury</button>
+                                    </div>
+                                </form>
+                                <div class="row text-center">
+                                    <button id="houseSubmitButton" class="btn btn-sm btn-success" style="margin-top: 2px">Submit!</button>
+                                </div>
+                            </div><!--houseoptions-->
+                            <div id="afterHouseSubmit"></div>
                         </div>
                     </section>
                 </div>
 
                 <!--ROW 2 FOR HOUSING AND INVESTMENTS-->
-                <div class="row initialHide">
+                <div class="row">
                     <section id="events">
                         <div class="col-md-5 col-md-offset-1">
-                            <label>Events:</label>
+                            <div class="row">
+                                <label>Events:</label>
+                            </div>
                             <select name="options" id="options">
                                 <option value="option1" id="option1">Brand New Shoes : $200</option>
                                 <option value="option2" id="option2">Job Change : Your income decreases by 20%</option>
@@ -222,7 +215,9 @@
                     
                     <div class="col-md-5">
                         <section id="investment-section">
-                            <label>Investments: (takes effect after 10 weeks!)</label>
+                            <div class="row">
+                                <label>Investments: (takes effect after 10 weeks!)</label>
+                            </div>
                             <select name="investments" id="investments">
                                 <option value="invest1" id="invest1">Invest $1000, 100% chance to make it $1200 </option>
                                 <option value="invest2" id="invest2">Invest $1000, 80% chance to make it $1500</option>

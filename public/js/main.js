@@ -78,8 +78,6 @@ function initializeClock(id, endtime) {
         deadline = new Date(Date.parse(new Date()) + 0.00006 * 24 * 60 * 60 * 1000);
         initializeClock('clockdiv', deadline);
       }
-
-      
     }
   }
   updateClock();
@@ -139,11 +137,11 @@ function goToByScroll(id){
 $("#foodSubmitButton").on('click', function() {
   $food = $(".foodbtn.toggleFood");
   if ($food.attr('id') === 'foodlow') {
-    foodCost = 100;
+    foodCost = 50;
   } else if ($food.attr('id') === 'foodmed') {
-    foodCost = 200;
+    foodCost = 100;
   } else if ($food.attr('id') === 'foodhigh') {
-    foodCost = 300;
+    foodCost = 150;
   } else {
     foodCost = -10;
   }
@@ -154,49 +152,41 @@ $("#foodSubmitButton").on('click', function() {
     $("#afterFoodSubmit").html("<h4>Submitted!</h4>");
     foodExpense.html('<h3>Food option: ' + $food.attr('value') + 
                     ' / Food Expense: $' + foodCost+ '</h3>');
+    if (foodCounter && houseCounter) {
+      start();
+    };
   } else {
     foodCounter = false;
     $("#afterFoodSubmit").html("<h4>Please select one of the options!");
   }
 });
 
-// function submitFood() {
-//   $foodSubmit = $('#foodSubmitButton');
-  
-
-//   if (isNaN(foodCost)) {
-//     $('#afterFoodSubmit').html('<h4>Invalid Entry! Please Enter A Number!</h4>');
-//     foodCounter = false;
-//   } else {
-//     $('#afterFoodSubmit').html('<h4>Submitted!</h4>');
-//     if (regexp.test(foodCost) === true) {
-//       foodCounter = true;
-//       foodExpense.html('<h3>Food Expense: $' + foodCost+ '</h3>');
-//     } else {
-//       $('#afterFoodSubmit').html('<h4>Invalid Entry! Please Enter A Valid Number! (XXX.XX format)</h4>');
-//       foodCounter = false;
-//     }
-//   }
-// }
-
-function submitHouse() {
-  houseCost = $('#houseCost').val();
-  houseSubmit = $('#houseSubmitButton');
-  if (isNaN(houseCost)) {
-    $('#afterHouseSubmit').html('<h4>Invalid Entry! Please Enter A Number!</h4>');
-    houseCounter = false;
+$("#houseSubmitButton").on('click', function() {
+  $house = $(".housebtn.toggleHouse");
+  if ($house.attr('id') === 'houselow') {
+    houseCost = 100;
+  } else if ($house.attr('id') === 'housemed') {
+    houseCost = 200;
+  } else if ($house.attr('id') === 'househigh') {
+    houseCost = 300;
   } else {
-    $('#afterHouseSubmit').html('<h4>Submitted!</h4>');
-    if (regexp.test(houseCost) === true) {
-      houseCounter = true;
-      houseExpense.html('<h3>House Expense: $' + houseCost+ '</h3>');
-    } else {
-      $('#afterHouseSubmit').html('<h4>Invalid Entry! Please Enter A Valid Number! (XXX.XX format)</h4>');
-      houseCounter = false;
-    }
+    houseCost = -10;
   }
 
-}
+  if (houseCost > 0) {
+    houseCounter = true;
+    $("#houseoptions").fadeOut(2000);
+    $("#afterHouseSubmit").html("<h4>Submitted!</h4>");
+    houseExpense.html("<h3>House option: " + $house.attr('value') +
+                      " / House Expense: $" + houseCost+ "</h3>");
+    if (foodCounter && houseCounter) {
+      start();
+    };
+  } else {
+    houseCounter = false;
+    $("#afterHouseSubmit").html("<h4>Please select one of the options!");
+  }
+});
 
 function balanceUpdate(action, moneyVal) {
   if (action === 'add') {
@@ -325,7 +315,7 @@ $(window).on('beforeunload', function(){
 });
 
 $(document).ready(function(){
-  $('#ownedItems, #hideShoes, #hidePhone, #gameover').hide();
+  $('#events, #investment-section, #ownedItems, #hideShoes, #hidePhone, #gameover').hide();
   //initialHide.show();
   $('#friends').hide();
   $(window).scroll(function() {
@@ -337,20 +327,19 @@ $(document).ready(function(){
       $('#myBtn1').fadeOut(1000);
     };
   });
-
-  $('#afterSubmit').html('<h3>Your bi-weekly salary is : $' + salaryValue + '</h3>');
-  currentBalance.html('<h2>You currently have: $0</h2>');
-  deadline = new Date(Date.parse(new Date()) + 0.00006 * 24 * 60 * 60 * 1000);
-  initializeClock('clockdiv', deadline); 
   //goToByScroll('weekdiv');
 
+  //to toggle food and house buttons between clicked and non-cicked buttons
   $("#foodsubmit").find('button').on('click', function() {
     $('.foodbtn').not(this).removeClass('toggleFood').data('clicked', false);
     $(this).addClass('toggleFood').data('clicked', true);
     // console.log($(this).data('clicked'));
   });
 
-
+  $("#housesubmit").find('button').on('click', function() {
+    $(".housebtn").not(this).removeClass('toggleHouse').data('clicked', false);
+    $(this).addClass('toggleHouse').data('clicked', true);
+  });
 
   $('#myBtn1').on('click', function() {
     goToByScroll('main_container');
@@ -363,7 +352,7 @@ $(document).ready(function(){
       scrollTop: $('#placeholder1').offset().top
     }, 2000);
   });
-});
+});//document.ready
 
 $(function() {
     $('.confirm').click(function(e) {
@@ -375,6 +364,15 @@ $(function() {
     });
 });
 
+//define a function that would initialize clock and start the game
+var start = function() {
+  $('#afterSubmit').html('<h3>Your bi-weekly salary is : $' + salaryValue + '</h3>').hide().slideDown(1500);
+  currentBalance.fadeIn(2000).html('<h2>You currently have: $0</h2>').hide().slideDown(1500);
+  $("#events, #investment-section").fadeIn(2000);
+  deadline = new Date(Date.parse(new Date()) + 0.00006 * 24 * 60 * 60 * 1000);
+  initializeClock('clockdiv', deadline); 
+
+};
 var adminMode = false;
 var shoeCounter = 0, phoneCounter = 0;
 var seconds = 0;
@@ -392,7 +390,7 @@ var t = 0, i = 0;
 var regexp = /^\d+\.?\d{0,2}$/;
 var foodCost = 0, houseCost = 0;
 var balance = 0;
-var salaryValue = 500; //fixed salary value
+var salaryValue = 1000; //fixed salary value
 var weekCounter = 0;
 var deadline = 0;
 var startWeek = 0, endWeek=52;

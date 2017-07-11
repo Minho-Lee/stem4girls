@@ -851,12 +851,12 @@ h2 {
     /*padding-top: 35px;*/
 }
 
-.toggleFood {
+.toggleFood , .toggleHouse{
     background-color: #a0a0f9;
     color: white;
 }
 
-.toggleFood:hover{
+.toggleFood:hover, .toggleHouse:hover{
     background-color: #6565f4;
     color: white;
 }
