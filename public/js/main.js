@@ -200,9 +200,8 @@ function balanceUpdate(action, moneyVal) {
 function optionSubmit() {
   var options = $('#options');
   if (options.val() === 'option1') {
-    balanceUpdate('minus', 200);
-    eventUpdate.html('<h3>You bought brand new shoes! Spent $200.</h3>');
-
+    balanceUpdate('minus', 100);
+    eventUpdate.html('<h3>You bought brand new shoes! Spent $100.</h3>');
     shoeCounter++;
     if (shoeCounter === 1) {
       $('#hideShoes').fadeIn(2000);
@@ -211,13 +210,17 @@ function optionSubmit() {
     }
 
   } else if(options.val() === 'option2') { 
-    salaryValue = salaryValue * 0.8;
-    eventUpdate.html('<h3>You changed jobs! Decrease salary by 20%.</h3>');
-    $('#afterSubmit').html('<h3>Your bi-weekly salary is : $' + Math.round(parseFloat(salaryValue)*100) / 100 + '</h3>');
+    eventUpdate.html('<h3>You bought new jewelry! Spent $80.</h3>');
+    balanceUpdate('minus', 80);
+    ringCounter++;
+    if (ringCounter === 1 ) {
+      $("#hideRing").fadeIn(2000);
+    } else {
+      $("#multipleRings").html("<h4> X " + ringCounter + "</h4>");
+    }
   } else if(options.val() === 'option3') {
     balanceUpdate('minus', 500);
     eventUpdate.html('<h3>You bought a brand new phone! Spent $500</h3>');
-
     phoneCounter++;
     if (phoneCounter === 1) {
       $('#hidePhone').fadeIn(2000);
@@ -225,11 +228,23 @@ function optionSubmit() {
       $('#multiplePhones').html('<h4> X ' + phoneCounter + '</h4>');
     }
   } else if(options.val() === 'option4') {
-    balanceUpdate('add', 1000);
-    eventUpdate.html('<h3>You won a lottery! Gained $1000</h3>');
+    balanceUpdate('minus', 50);
+    eventUpdate.html('<h3>You bought brand new clothes! Spent $50</h3>');
+    dressCounter++;
+    if (dressCounter === 1) {
+      $("#hideDress").fadeIn(2000);
+    } else {
+      $("#multipleDresses").html("<h4> X " + dressCounter + "</h4>");
+    }
   } else if(options.val() === 'option5') {
-    eventUpdate.html('<h3>Nothing happened</h3>');
-    //do nothing
+    eventUpdate.html('<h3>You bought a brand new purse! Spent $250</h3>');
+    balanceUpdate('minus', 250);
+    bagCounter++;
+    if (bagCounter === 1) {
+      $("#hidePurse").fadeIn(2000);
+    } else {
+      $("#multiplePurses").html("<h4> X " + bagCounter + "</h4>");
+    }
   }
 
   ++i;
@@ -316,7 +331,8 @@ $(window).on('beforeunload', function(){
 });
 
 $(document).ready(function(){
-  $('#events, #investment-section, #ownedItems, #hideShoes, #hidePhone, #gameover').hide();
+  //$('#events, #investment-section, #ownedItems, #hideShoes, #hidePhone, #gameover').hide();
+  $("#ownedItems, #hideShoes, #hideRing ,#hidePhone, #hideDress, #hidePurse, #gameover").hide();
   //initialHide.show();
   $('#friends').hide();
   $(window).scroll(function() {
@@ -375,7 +391,7 @@ var start = function() {
 
 };
 var adminMode = false;
-var shoeCounter = 0, phoneCounter = 0;
+var shoeCounter = 0, phoneCounter = 0, ringCounter = 0, dressCounter = 0, bagCounter = 0;
 var seconds = 0;
 var investmentButton = document.getElementById('investmentSubmit');
 var initialHide = $('.initialHide');

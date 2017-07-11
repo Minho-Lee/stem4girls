@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="">
 
     <head>
@@ -143,7 +143,7 @@
                     </section>
                 </div-->
 
-                <!--ROW 1 for food and events-->
+                <!--ROW 1 for food and housing-->
                 <div class="row" style="margin-top: 3em">
                     <section id="food">
                         <div class="col-sm-1 col-sm-offset-1">
@@ -194,7 +194,7 @@
                     </section>
                 </div>
 
-                <!--ROW 2 FOR HOUSING AND INVESTMENTS-->
+                <!--ROW 2 FOR EVENTS AND INVESTMENTS-->
                 <div class="row" style="margin-top: 2em">
                     <section id="events">
                         <div class="col-md-5 col-md-offset-1">
@@ -202,11 +202,11 @@
                                 <label>Events:</label>
                             </div>
                             <select name="options" id="options">
-                                <option value="option1" id="option1">Brand New Shoes : $200</option>
-                                <option value="option2" id="option2">Job Change : Your income decreases by 20%</option>
-                                <option value="option3" id="option3">New Iphone : $500</option>
-                                <option value="option4" id="option4">Won a lottery : $1000</option>
-                                <option value="option5" id="option5">Nothing happened!</option>
+                                <option value="option1" id="option1">Buy Brand New Shoes : $100</option>
+                                <option value="option2" id="option2">Buy Brand New Jewelry : $80</option>
+                                <option value="option3" id="option3">Buy A Brand New Phone : $500</option>
+                                <option value="option4" id="option4">Buy Brand New Clothes : $50</option>
+                                <option value="option5" id="option5">Buy A Brand New Purse : $250 </option>
                             </select>
                             <button onclick="optionSubmit()" id=optionSubmit>Submit Event!</button>
                             <div id="afterEventSubmit"></div>
@@ -233,7 +233,7 @@
 
                 <section id="ownedItems">
                     <h3>Owned Items:</h3>
-                    <div class="row initialHide">
+                    <div class="row">
                         <div id="hideShoes">
                             <div class="col-md-2 col-md-offset-1">
                                 <img class="img-rounded" src="img/shoe_icon.png" width="100px"/>
@@ -251,7 +251,33 @@
                                 <span id="multiplePhones"></span>
                             </div>
                         </div>
-                        <!--/section-->
+                        <div id="hideRing">
+                            <div class="col-md-2 col-md-offset-1">
+                                <img class="img-rounded" src="img/ring_icon.png" width="100px"/>
+                            </div>
+                            <div class="col-md-1">
+                                <span id="multipleRings"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div id="hidePurse">
+                            <div class="col-md-2 col-md-offset-1">
+                                <img class="img-rounded" src="img/purse_icon.png" width="100px"/>
+                            </div>
+                            <div class="col-md-1">
+                                <span id="multiplePurses"></span>
+                            </div>
+                        </div>
+                        <div id="hideDress">
+                            <div class="col-md-2 col-md-offset-1">
+                                <img class="img-rounded" src="img/dress_icon.png" width="100px"/>
+                            </div>
+                            <div class="col-md-1">
+                                <span id="multipleDresses"></span>
+                            </div>
+                        </div>
                     </div>
                 </section>
             <!--well end-->
