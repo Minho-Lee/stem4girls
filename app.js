@@ -53,14 +53,14 @@ var db;
 cloudant.db.create(dbname, function(err, data) {
     db = cloudant.db.use(dbname);
     if (err) //If database already exists
-        console.log("Database exists."); //NOTE: A Database can be created through the GUI interface as well
+        console.log("stem4girls Database exists."); //NOTE: A Database can be created through the GUI interface as well
     else {
         console.log("Created database.");
         db.insert({
                 _id: "_design/users",
                 views: {
                     "users": {
-                        "map": "function (doc) {\n  emit(doc._id, [doc._rev, doc.userid]);\n}"
+                        "map": "function (doc) {\n  emit(doc._id, [doc._rev, doc.username]);\n}"
                     }
                 }
             },
@@ -74,34 +74,46 @@ cloudant.db.create(dbname, function(err, data) {
 });
 
 app.post('/insertUser', function(req, res) {
+    var username = req.body.username;
+    console.log(username);
     db.find({
         selector: {
-            userid: req.body.userid
+            'username' : username
         }
     }, function(er, result) {
         if (er) {
             throw er;
         }
         eventNames = result.docs;
-        console.log('Found %d documents with name ' + req.query.msg, result.docs.length);
-
+        
         if (result.docs.length > 0) {
-            updatednotes = eventNames[0].notes;
-            updatednotes.push(req.body.note);
+            console.log(eventNames[0]);
+            console.log('Found %d documents with name ' + eventNames[0].username, result.docs.length);
+            var session = eventNames[0].session;
+            console.log(session.number);
+            console.log(typeof session.number);
+            session.push({
+                'number': (parseInt(session.number) + 1),
+                'balance': 0
+            });
 
 
             var user = {
-                'userid': eventNames[0].userid,
-                'notes': updatednotes,
+                'username': eventNames[0].username,
+                'session' : eventNames[0].session,
                 '_id': eventNames[0]._id,
                 '_rev': eventNames[0]._rev
             };
 
             db.insert(user, function(err, body) {});
         } else {
+            console.log('Unable to find '+ username);
             db.insert({
-                    'userid': req.body.userid,
-                    'users': [req.body.note]
+                    'username': username,
+                    'session': [{
+                        'number': 1,
+                        'balance': 0
+                    }]
                 },
                 function(err, data) {
                     if (err)

@@ -356,6 +356,25 @@ $(document).ready(function(){
   });
 });//document.ready
 
+$("#loginsubmit").on('click', function() {
+  var $username = $("#username").val();
+  if ($username !== '') {
+    $("#loginbutton").hide();
+    $("#loginsubmit").prop('disabled', true);
+    $("#close").trigger('click');
+    $.ajax({
+      type: "POST",
+      url: "insertUser",
+      data: { 'username': $username},
+      success: function(res, status, xhr) {
+        console.log("success! Type: "+ xhr.getResponseHeader("content-type"));
+        console.log("status: " + status);
+        console.log(JSON.stringify(res));
+      }
+    })//ajax done
+  };
+});
+
 $(function() {
     $('.confirm').click(function(e) {
         e.preventDefault();
