@@ -31,8 +31,9 @@ function initializeClock(id, endtime) {
     hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
     minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
     secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
-
-    if (t.total < 0) {
+    console.log('weeks: ' + weekCounter + ' / seconds: ' + secondsSpan.innerHTML + ' / ' + balance);
+    if (t.total <= 1) {
+      console.log('before: ' + balance);
       clearInterval(timeinterval);
       var weeks = document.getElementById('weekdiv');
       var weeksSpan = weeks.querySelector('.weeks');
@@ -49,7 +50,7 @@ function initializeClock(id, endtime) {
           investUpdate.html("<h3>Investment Successful! You earned $" + investReturn + "</h3>");
           balanceUpdate('add', investReturn);
         } else {
-          investUpdate.html("<h3>Invest Unsuccessful :( You lost your $1000</h3>");
+          investUpdate.html("<h3>Invest Unsuccessful :( You lost your $100</h3>");
         } 
         investmentButton.disabled = false;
         investmentButton.innerHTML = "Submit Investment!";
@@ -59,6 +60,7 @@ function initializeClock(id, endtime) {
 
       //Check if the game is still going on (modify endWeek to change the ending)
       if (weekCounter === endWeek || adminMode === true) {
+        console.log('#####');
         $('#currentBalance, #housing, #food, #events, #investment-section, #foodExpense, \
             #houseExpense, #eventUpdate, #investmentUpdate, \
             #afterSubmit, #ownedItems').hide('slow', function() {
@@ -70,8 +72,10 @@ function initializeClock(id, endtime) {
               $(".salaryHide").slideUp('slow');
               if (investCounter === true) {
                 $("#verbiage").html("<h4>Your investment of $100 came back because the game is over!");
-                balance += 100;
+                console.log('investreturn: ' + balance);
+                balanceUpdate('add', 100);
               };
+              console.log('finished');
               $("#gameover")
                 .html('<h1>Congrats! You finished the game with balance of <b>$' + Math.round(parseFloat(balance)*100) / 100 + '</b></h1>')
                 .fadeIn(2000);
@@ -104,23 +108,39 @@ function initializeClock(id, endtime) {
                       maxbalance = docs[outer].session[inner].balance;
                     }
                   }
-                  player_array.push([name, maxbalance]);
+                  player_array.push([0, name, maxbalance]);
                 }
-
-                for (var i = 0; i < player_array.length; i++) {
-                  console.log(player_array[i]);
-                }
+                $("#rankings").fadeIn('slow');
+                var leaderboard = $("#leaderboard").DataTable({
+                  'data': player_array,
+                  'order': [[2, 'desc']],
+                  'columns': [
+                    { 'title': 'Rank' },
+                    { 'title': 'Username' },
+                    { 'title': 'Balance' }
+                  ],
+                  'columnDefs' :[{
+                    'orderable': false,
+                    'searchable': false,
+                    'targets': [0,2]
+                  }, {
+                    'orderable' : false,
+                    'searchable': true,
+                    'targets' : [1]
+                  }],
+                  'paging': false
+                });//DataTable end
+                leaderboard.on( 'order.dt search.dt', function () {
+                  leaderboard.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                     cell.innerHTML = i + 1;
+                  });
+               }).draw();
               },
               error: function(xhr, textStatus, error) {
                 console.log(xhr.statusText);
                 console.log(textStatus);
                 console.log(error); 
               }
-            })
-            .fail(function(xhr, textStatus, err) {
-              console.log(xhr.statusText);
-              console.log(textStatus);
-              console.log(err);
             });//ajax done rankings
           }//done if statement
         })
@@ -128,10 +148,9 @@ function initializeClock(id, endtime) {
           console.log(xhr.statusText);
           console.log(textStatus);
           console.log(err);
-        });;//ajax done submitbalance
+        });//ajax done submitbalance
 
-        
-          
+      console.log('after: '+ balance);
         
         
       } else {
@@ -143,9 +162,13 @@ function initializeClock(id, endtime) {
       }
     }
   }//updateClock
-  updateClock();
+  
+  // updateClock();
   //this calls the updateClock() method every 1 second
-  var timeinterval = setInterval(updateClock, 1000);
+  if (weekCounter !== endWeek && !adminMode) {
+    console.log('timeinterval');
+    var timeinterval = setInterval(updateClock, 1000);
+  }
 }
 
 //scroll to any given div
@@ -373,7 +396,7 @@ $(window).on('beforeunload', function(){
 });
 
 $(document).ready(function(){
-  $(".jumbotron, #events, #investment-section, #ownedItems, \
+  $("#rankings, #events, #investment-section, #ownedItems, \
     #hideShoes, #hideRing ,#hidePhone, #hideDress, #hidePurse, #gameover").hide();
   //initialHide.show();
   $('#friends').hide();
@@ -478,4 +501,5 @@ var balance = 0;
 var salaryValue = 1000; //fixed salary value
 var weekCounter = 0;
 var deadline = 0;
-var startWeek = 0, endWeek=52, time=10000;
+var startWeek = 0, endWeek=4, time=6000;
+
