@@ -31,9 +31,9 @@ function initializeClock(id, endtime) {
     hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
     minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
     secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
-    console.log('weeks: ' + weekCounter + ' / seconds: ' + secondsSpan.innerHTML + ' / ' + balance);
-    if (t.total <= 1) {
-      console.log('before: ' + balance);
+    //console.log('weeks: ' + weekCounter + ' / seconds: ' + secondsSpan.innerHTML + ' / ' + balance);
+    if (t.total <= 0) {
+      //console.log('before: ' + balance);
       clearInterval(timeinterval);
       var weeks = document.getElementById('weekdiv');
       var weeksSpan = weeks.querySelector('.weeks');
@@ -60,7 +60,6 @@ function initializeClock(id, endtime) {
 
       //Check if the game is still going on (modify endWeek to change the ending)
       if (weekCounter === endWeek || adminMode === true) {
-        console.log('#####');
         $('#currentBalance, #housing, #food, #events, #investment-section, #foodExpense, \
             #houseExpense, #eventUpdate, #investmentUpdate, \
             #afterSubmit, #ownedItems').hide('slow', function() {
@@ -70,18 +69,20 @@ function initializeClock(id, endtime) {
               secondsSpan.innerHTML = '00';
               weeksSpan.innerHTML = weekCounter;
               $(".salaryHide").slideUp('slow');
-              if (investCounter === true) {
-                $("#verbiage").html("<h4>Your investment of $100 came back because the game is over!");
-                console.log('investreturn: ' + balance);
-                balanceUpdate('add', 100);
-              };
-              console.log('finished');
-              $("#gameover")
-                .html('<h1>Congrats! You finished the game with balance of <b>$' + Math.round(parseFloat(balance)*100) / 100 + '</b></h1>')
-                .fadeIn(2000);
               //hiding login button in order to prevent users from logging in after the game finishes
               $("#loginbutton").hide();
             });
+          if (investCounter === true) {
+            $("#verbiage").html("<h4>Your investment of $100 came back because the game is over!");
+            console.log('investreturn: ' + balance);
+            balanceUpdate('add', 100);
+          };
+
+        console.log('gameover');
+        $("#gameover")
+          .html('<h1>Congrats! You finished the game with balance of <b>$' + Math.round(parseFloat(balance)*100) / 100 + '</b></h1>')
+          .fadeIn(2000);
+
         $.ajax({
           type: "POST",
           url: 'submitbalance',
@@ -89,7 +90,7 @@ function initializeClock(id, endtime) {
                   'username' : $username,
                   'balance' : Math.round(parseFloat(balance)*100) / 100
                 }
-        }).done(function(data) {
+          }).done(function(data) {
           if (data.status === 'success') {
             $.ajax({
               type: "POST",
@@ -149,9 +150,6 @@ function initializeClock(id, endtime) {
           console.log(textStatus);
           console.log(err);
         });//ajax done submitbalance
-
-      console.log('after: '+ balance);
-        
         
       } else {
         currentBalance.html('<h2>You currently have: $' + Math.round(parseFloat(balance)*100) / 100 + '</h2>');
@@ -163,12 +161,9 @@ function initializeClock(id, endtime) {
     }
   }//updateClock
   
-  // updateClock();
+  updateClock();
   //this calls the updateClock() method every 1 second
-  if (weekCounter !== endWeek && !adminMode) {
-    console.log('timeinterval');
-    var timeinterval = setInterval(updateClock, 1000);
-  }
+  var timeinterval = setInterval(updateClock, 1000);
 }
 
 //scroll to any given div
@@ -501,5 +496,5 @@ var balance = 0;
 var salaryValue = 1000; //fixed salary value
 var weekCounter = 0;
 var deadline = 0;
-var startWeek = 0, endWeek=4, time=6000;
+var startWeek = 0, endWeek=52, time=10000;
 
