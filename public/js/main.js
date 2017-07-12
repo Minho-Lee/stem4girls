@@ -78,6 +78,7 @@ function initializeClock(id, endtime) {
               //hiding login button in order to prevent users from logging in after the game finishes
               $("#loginbutton").hide();
             });
+
         $.ajax({
           type: "POST",
           url: 'submitbalance',
@@ -95,12 +96,28 @@ function initializeClock(id, endtime) {
             console.log(textStatus);
             console.log(error);
           }
-        });//ajax done
+        });//ajax done submitbalance
+
+        $.ajax({
+          type: "get",
+          url: 'getrankings',
+          data: { 'text' : 'user'},
+          success: function(res, status, xhr) {
+            console.log("success! Type: "+ xhr.getResponseHeader("content-type"));
+            console.log("status: " + status);
+            console.log(res);
+          },
+          error: function(xhr, textStatus, error) {
+            console.log(xhr.statusText);
+            console.log(textStatus);
+            console.log(error); 
+          }
+        });//ajax done rankings
       } else {
         currentBalance.html('<h2>You currently have: $' + Math.round(parseFloat(balance)*100) / 100 + '</h2>');
         weeksSpan.innerHTML = weekCounter;
         //deadline = new Date(Date.parse(new Date()) + 0.00006 * 24 * 60 * 60 * 1000);
-        deadline= new Date(Date.parse(new Date()) + 10000);
+        deadline= new Date(Date.parse(new Date()) + 5000);
         initializeClock('clockdiv', deadline);
       }
     }
@@ -335,7 +352,7 @@ $(window).on('beforeunload', function(){
 });
 
 $(document).ready(function(){
-  $("#events, #investment-section, #ownedItems, \
+  $(".jumbotron, #events, #investment-section, #ownedItems, \
     #hideShoes, #hideRing ,#hidePhone, #hideDress, #hidePurse, #gameover").hide();
   //initialHide.show();
   $('#friends').hide();
@@ -414,7 +431,7 @@ var start = function() {
   $('#afterSubmit').html('<h3>Your bi-weekly salary is : $' + salaryValue + '</h3>').hide().slideDown(1500);
   currentBalance.fadeIn(2000).html('<h2>You currently have: $0</h2>').hide().slideDown(1500);
   $("#events, #investment-section").fadeIn(2000);
-  deadline = new Date(Date.parse(new Date()) + 10000);
+  deadline = new Date(Date.parse(new Date()) + 5000);
   initializeClock('clockdiv', deadline); 
 
 };
@@ -439,4 +456,4 @@ var balance = 0;
 var salaryValue = 1000; //fixed salary value
 var weekCounter = 0;
 var deadline = 0;
-var startWeek = 0, endWeek=52;
+var startWeek = 0, endWeek=4;

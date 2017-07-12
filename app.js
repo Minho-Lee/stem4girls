@@ -150,8 +150,7 @@ app.post('/submitbalance', function(req, res) {
             'number': sessionNum,
             'balance': balance
         });
-
-        console.log(session);
+        
         var user = {
             'username': username,
             'session': session,
@@ -165,6 +164,10 @@ app.post('/submitbalance', function(req, res) {
     });
 });
 
+app.get('/getrankings', function(req, res) {
+    console.log('getrankings');
+    console.log(req.body.text);
+});
 //app.set('view engine', 'ejs');
 //app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'jade');
