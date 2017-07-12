@@ -150,7 +150,7 @@ app.post('/submitbalance', function(req, res) {
             'number': sessionNum,
             'balance': balance
         });
-        
+
         var user = {
             'username': username,
             'session': session,
@@ -159,14 +159,27 @@ app.post('/submitbalance', function(req, res) {
         }
         db.insert(user, function(err, body) {});
         res.json({
-            'session' : session[sessionNum - 1]
+            'session' : session[sessionNum - 1],
+            'status' : 'success'
         });
     });
 });
 
-app.get('/getrankings', function(req, res) {
-    console.log('getrankings');
-    console.log(req.body.text);
+app.post('/getrankings', function(req, res) {
+    var text = req.body.text;
+    db.find({
+        selector: {
+            $text : text
+        }
+    }, function(err, result) {
+        if (err)
+            throw err;
+        //note: there should be at least 1 player
+        eventNames = result.docs;
+        res.json({
+            'players': eventNames
+        })
+    });
 });
 //app.set('view engine', 'ejs');
 //app.set('views', path.join(__dirname, 'views'));

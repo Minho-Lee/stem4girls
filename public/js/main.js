@@ -78,46 +78,67 @@ function initializeClock(id, endtime) {
               //hiding login button in order to prevent users from logging in after the game finishes
               $("#loginbutton").hide();
             });
-
         $.ajax({
           type: "POST",
           url: 'submitbalance',
           data: { 
                   'username' : $username,
                   'balance' : Math.round(parseFloat(balance)*100) / 100
-                },
-          success: function(res, status, xhr) {
-            console.log("success! Type: "+ xhr.getResponseHeader("content-type"));
-            console.log("status: " + status);
-            console.log(res.session);
-          },
-          error: function(xhr, textStatus, error){
-            console.log(xhr.statusText);
-            console.log(textStatus);
-            console.log(error);
-          }
-        });//ajax done submitbalance
+                }
+        }).done(function(data) {
+          if (data.status === 'success') {
+            $.ajax({
+              type: "POST",
+              url: 'getrankings',
+              data: { 'text' : 'username'},
+              success: function(res, status, xhr) {
+                console.log("success! Type: "+ xhr.getResponseHeader("content-type"));
+                console.log("status: " + status);
+                //console.log(JSON.stringify(res));
+                var docs = res.players;
+                for (var outer = 0; outer < docs.length; outer++) {
+                  var name = docs[outer].username;
+                  var maxbalance = docs[outer].session[0].balance;
+                  for (inner = 1; inner < docs[outer].session.length; inner++) {
+                    if (docs[outer].session[inner].balance > maxbalance) {
+                      maxbalance = docs[outer].session[inner].balance;
+                    }
+                  }
+                  player_array.push([name, maxbalance]);
+                }
 
-        $.ajax({
-          type: "get",
-          url: 'getrankings',
-          data: { 'text' : 'user'},
-          success: function(res, status, xhr) {
-            console.log("success! Type: "+ xhr.getResponseHeader("content-type"));
-            console.log("status: " + status);
-            console.log(res);
-          },
-          error: function(xhr, textStatus, error) {
-            console.log(xhr.statusText);
-            console.log(textStatus);
-            console.log(error); 
-          }
-        });//ajax done rankings
+                for (var i = 0; i < player_array.length; i++) {
+                  console.log(player_array[i]);
+                }
+              },
+              error: function(xhr, textStatus, error) {
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error); 
+              }
+            })
+            .fail(function(xhr, textStatus, err) {
+              console.log(xhr.statusText);
+              console.log(textStatus);
+              console.log(err);
+            });//ajax done rankings
+          }//done if statement
+        })
+        .fail(function(xhr, textStatus, err) {
+          console.log(xhr.statusText);
+          console.log(textStatus);
+          console.log(err);
+        });;//ajax done submitbalance
+
+        
+          
+        
+        
       } else {
         currentBalance.html('<h2>You currently have: $' + Math.round(parseFloat(balance)*100) / 100 + '</h2>');
         weeksSpan.innerHTML = weekCounter;
         //deadline = new Date(Date.parse(new Date()) + 0.00006 * 24 * 60 * 60 * 1000);
-        deadline= new Date(Date.parse(new Date()) + 5000);
+        deadline= new Date(Date.parse(new Date()) + time);
         initializeClock('clockdiv', deadline);
       }
     }
@@ -431,12 +452,13 @@ var start = function() {
   $('#afterSubmit').html('<h3>Your bi-weekly salary is : $' + salaryValue + '</h3>').hide().slideDown(1500);
   currentBalance.fadeIn(2000).html('<h2>You currently have: $0</h2>').hide().slideDown(1500);
   $("#events, #investment-section").fadeIn(2000);
-  deadline = new Date(Date.parse(new Date()) + 5000);
+  deadline = new Date(Date.parse(new Date()) + time);
   initializeClock('clockdiv', deadline); 
 
 };
 
-var adminMode = false, $username;
+var player_array = [];
+var adminMode = false, $username, submitbalance = false;
 var shoeCounter = 0, phoneCounter = 0, ringCounter = 0, dressCounter = 0, bagCounter = 0;
 var seconds = 0;
 var investmentButton = document.getElementById('investmentSubmit');
@@ -456,4 +478,4 @@ var balance = 0;
 var salaryValue = 1000; //fixed salary value
 var weekCounter = 0;
 var deadline = 0;
-var startWeek = 0, endWeek=4;
+var startWeek = 0, endWeek=52, time=10000;
