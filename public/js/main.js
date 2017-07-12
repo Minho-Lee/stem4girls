@@ -21,8 +21,7 @@ function initializeClock(id, endtime) {
   var secondsSpan = clock.querySelector('.seconds');
 
   function updateClock() {
-    var user = $('#username').val();
-    if (user === "admin123") {
+    if ($username === "admin123") {
       adminMode = true;
     }
     
@@ -76,7 +75,27 @@ function initializeClock(id, endtime) {
               $("#gameover")
                 .html('<h1>Congrats! You finished the game with balance of <b>$' + Math.round(parseFloat(balance)*100) / 100 + '</b></h1>')
                 .fadeIn(2000);
+              //hiding login button in order to prevent users from logging in after the game finishes
+              $("#loginbutton").hide();
             });
+        $.ajax({
+          type: "POST",
+          url: 'submitbalance',
+          data: { 
+                  'username' : $username,
+                  'balance' : Math.round(parseFloat(balance)*100) / 100
+                },
+          success: function(res, status, xhr) {
+            console.log("success! Type: "+ xhr.getResponseHeader("content-type"));
+            console.log("status: " + status);
+            console.log(res.session);
+          },
+          error: function(xhr, textStatus, error){
+            console.log(xhr.statusText);
+            console.log(textStatus);
+            console.log(error);
+          }
+        });//ajax done
       } else {
         currentBalance.html('<h2>You currently have: $' + Math.round(parseFloat(balance)*100) / 100 + '</h2>');
         weeksSpan.innerHTML = weekCounter;
@@ -357,7 +376,7 @@ $(document).ready(function(){
 });//document.ready
 
 $("#loginsubmit").on('click', function() {
-  var $username = $("#username").val();
+  $username = $("#username").val();
   if ($username !== '') {
     $("#loginbutton").hide();
     $("#loginsubmit").prop('disabled', true);
@@ -365,13 +384,18 @@ $("#loginsubmit").on('click', function() {
     $.ajax({
       type: "POST",
       url: "insertUser",
-      data: { 'username': $username},
+      data: { 'username': $username },
       success: function(res, status, xhr) {
         console.log("success! Type: "+ xhr.getResponseHeader("content-type"));
         console.log("status: " + status);
         alert(res);
+      },
+      error: function(xhr, textStatus, error){
+        console.log(xhr.statusText);
+        console.log(textStatus);
+        console.log(error);
       }
-    })//ajax done
+    });//ajax done
   };
 });
 
@@ -395,7 +419,7 @@ var start = function() {
 
 };
 
-var adminMode = false;
+var adminMode = false, $username;
 var shoeCounter = 0, phoneCounter = 0, ringCounter = 0, dressCounter = 0, bagCounter = 0;
 var seconds = 0;
 var investmentButton = document.getElementById('investmentSubmit');

@@ -86,10 +86,11 @@ app.post('/insertUser', function(req, res) {
         }
         eventNames = result.docs;
         if (result.docs.length > 0) {
-            //console.log(eventNames[0]);
+            // console.log(typeof eventNames[0]);
             console.log('Found %d documents with name ' + eventNames[0].username, result.docs.length);
             var session = eventNames[0].session, 
-                sessionNum = Object.keys(session).length;;
+                sessionNum = Object.keys(session).length;
+            
             session.push({
                 'number': sessionNum + 1,
                 'balance': 0
@@ -123,7 +124,46 @@ app.post('/insertUser', function(req, res) {
             res.send('Welcome ' + username + ' :D\nThis is your first session!');
         }
     });
-})
+});//insertUser post
+
+app.post('/submitbalance', function(req, res) {
+    var username = req.body.username;
+    var balance = req.body.balance;
+    console.log(username + ' / ' + balance);
+    db.find({
+        selector: {
+            'username' : username
+        }
+    }, function(err, result) {
+        if (err) {
+            throw err;
+        }
+        eventNames = result.docs;
+        //*NOTE: at this point, a record of the logged in user should exist because
+        //if they weren't in the db before, they would've been inserted in the beginning.
+        var session = eventNames[0].session, 
+            sessionNum = Object.keys(session).length;
+
+        //remove last session so that a new balance can be put inside
+        session.splice(sessionNum - 1, 1);
+        session.push({
+            'number': sessionNum,
+            'balance': balance
+        });
+
+        console.log(session);
+        var user = {
+            'username': username,
+            'session': session,
+            '_id': eventNames[0]._id,
+            '_rev': eventNames[0]._rev
+        }
+        db.insert(user, function(err, body) {});
+        res.json({
+            'session' : session[sessionNum - 1]
+        });
+    });
+});
 
 //app.set('view engine', 'ejs');
 //app.set('views', path.join(__dirname, 'views'));
