@@ -214,7 +214,11 @@ $("#foodSubmitButton").on('click', function() {
     foodExpense.html('<h3>Food option: ' + $food.attr('value') + 
                     ' / Food Expense: $' + foodCost+ '</h3>');
     if (foodCounter && houseCounter) {
-      start();
+      if (logged_in) {
+        start();
+      } else {
+        alert('Please log in before starting the game!');
+      }
     };
   } else {
     foodCounter = false;
@@ -241,7 +245,11 @@ $("#houseSubmitButton").on('click', function() {
     houseExpense.html("<h3>House option: " + $house.attr('value') +
                       " / House Expense: $" + houseCost+ "</h3>");
     if (foodCounter && houseCounter) {
-      start();
+      if (logged_in) {
+        start();
+      } else {
+        alert('Please log in before starting the game!');
+      }
     };
   } else {
     houseCounter = false;
@@ -434,6 +442,7 @@ $(document).ready(function(){
 $("#loginsubmit").on('click', function() {
   $username = $("#username").val();
   if ($username !== '') {
+    logged_in = true;
     $("#loginbutton").hide();
     $("#loginsubmit").prop('disabled', true);
     $("#close").trigger('click');
@@ -445,6 +454,8 @@ $("#loginsubmit").on('click', function() {
         console.log("success! Type: "+ xhr.getResponseHeader("content-type"));
         console.log("status: " + status);
         alert(res);
+        if (foodCounter && houseCounter)
+          start();
       },
       error: function(xhr, textStatus, error){
         console.log(xhr.statusText);
@@ -476,7 +487,7 @@ var start = function() {
 };
 
 var player_array = [];
-var adminMode = false, $username, submitbalance = false;
+var adminMode = false, $username, submitbalance = false, logged_in = false;
 var shoeCounter = 0, phoneCounter = 0, ringCounter = 0, dressCounter = 0, bagCounter = 0;
 var seconds = 0;
 var investmentButton = document.getElementById('investmentSubmit');
