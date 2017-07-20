@@ -87,9 +87,9 @@ function initializeClock(id, endtime) {
           type: "POST",
           url: 'submitbalance',
           data: { 
-                  'username' : $username,
-                  'balance' : Math.round(parseFloat(balance)*100) / 100
-                }
+                'username' : $username,
+                'balance' : Math.round(parseFloat(balance)*100) / 100
+              }
           }).done(function(data) {
           if (data.status === 'success') {
             $.ajax({
@@ -104,7 +104,7 @@ function initializeClock(id, endtime) {
                 for (var outer = 0; outer < docs.length; outer++) {
                   var name = docs[outer].username;
                   var maxbalance = docs[outer].session[0].balance;
-                  for (inner = 1; inner < docs[outer].session.length; inner++) {
+                  for (inner = 0; inner < docs[outer].session.length; inner++) {
                     if (docs[outer].session[inner].balance > maxbalance) {
                       maxbalance = docs[outer].session[inner].balance;
                     }
@@ -507,5 +507,5 @@ var balance = 0;
 var salaryValue = 1000; //fixed salary value
 var weekCounter = 0;
 var deadline = 0;
-var startWeek = 0, endWeek=52, time=10000;
+var startWeek = 0, endWeek=4, time=10000;
 
