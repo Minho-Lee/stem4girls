@@ -71,14 +71,38 @@
                     <div class="help-tip">
                         <p>The purpose of this game is to earn the most amount of money by the end of the allotted time frame. Have a fun and friendly competition with your peers to see who can make more!</p>
                     </div>
-                    <p><h1 class="centered"><font color="#008673"/>Learn to Save!</h1></p>
+                    <p><h1 class="centered"><font color="#008673"/>Learn To Save!</h1></p>
                 </div>
                 
+                <div class="modal fade" id="instructionModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel">Instructions on how to play the game</h4>
+                            </div>
+                            <div class="modal-body">
+                                <h3 class="margin-bottom-medium">Hello! Welcome to 'Learn To Save!' The game will start once you do three things: </h3>
+                                <ol class="margin-bottom-medium">
+                                    <li>Choose what kind of house to live in, such as luxurious, or just moderate.</li>
+                                    <li>Choose what kind of food you want to have, such as fancy restaurants, or just home cooked meals.</li>
+                                    <li>Login so that you can compare your results with others at the end.</li>
+                                </ol>
+                                <h3>Once you've done all three tasks, the game will automatically start. Bon voyage!</h3>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" data-dismiss="modal">Got It!</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="panel panel-success">
                     <div class="panel-heading centered" style="max-width: 10;">
                         <h3 class="salaryHide">The timer will start once you decide on which house to live and how fancy your dinner is!</h3>
-                        <div id="transition"></div>
+                        <a href='#' data-toggle="modal" data-target="#instructionModal" id="instructions"><h3>Instructions</h3></a>
                     </div>
+
+
                     <div class="panel-body">
                         <section id="salaryInput" class="centered">
                             <!--form id="salaryForm"-->
