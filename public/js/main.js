@@ -150,7 +150,53 @@ function initializeClock(id, endtime) {
           console.log(textStatus);
           console.log(err);
         });//ajax done submitbalance
-        
+      //end of if statement where it checks for if the game is over or not
+      } else if ( weekCounter === event1 || weekCounter === event2 || weekCounter === event3) { 
+        if (weekCounter === event1) {
+          $("#event1").modal({
+            toggle: true,
+            backdrop: 'static',
+            keyboard: false
+          });
+          $("#do1").click(function() {
+            balanceUpdate('minus', 50);
+            alert('You bought a gift! Deducting $50 from your balance. You have a fun birthday party with your friends!');
+            currentBalance.html('<h2>You currently have: $' + Math.round(parseFloat(balance)*100) / 100 + '</h2>');
+          });
+          $("#dont1").click(function() {
+            alert('You decided not to buy a gift! Your friend is sad but your balance remains the same!');
+          });
+        } else if (weekCounter === event2) {
+          $("#event2").modal({
+            toggle: true,
+            backdrop: 'static',
+            keyboard: false
+          });
+          $("#do2").click(function() {
+            balanceUpdate('minus', 100);
+            alert('You took your dog to the vet! Deducting $100 from your balance. Your dog is saved!');
+            currentBalance.html('<h2>You currently have: $' + Math.round(parseFloat(balance)*100) / 100 + '</h2>');
+          });
+          $("#dont2").click(function() {
+            alert('You decided not to take your dog to the vet! Your dog is limping but your balance remains the same!');
+          });
+        } else {
+          $("#event3").modal({
+            toggle: true,
+            backdrop: 'static',
+            keyboard: false
+          });
+          $("#do3").click(function() {
+            balanceUpdate('minus', 50);
+            alert('You paid the fine for your parking ticket! Deducting $50 from your balance');
+            currentBalance.html('<h2>You currently have: $' + Math.round(parseFloat(balance)*100) / 100 + '</h2>');
+          });
+        }
+        currentBalance.html('<h2>You currently have: $' + Math.round(parseFloat(balance)*100) / 100 + '</h2>');
+        weeksSpan.innerHTML = weekCounter;
+        //deadline = new Date(Date.parse(new Date()) + 0.00006 * 24 * 60 * 60 * 1000);
+        deadline= new Date(Date.parse(new Date()) + time);
+        initializeClock('clockdiv', deadline);
       } else {
         currentBalance.html('<h2>You currently have: $' + Math.round(parseFloat(balance)*100) / 100 + '</h2>');
         weeksSpan.innerHTML = weekCounter;
@@ -158,13 +204,15 @@ function initializeClock(id, endtime) {
         deadline= new Date(Date.parse(new Date()) + time);
         initializeClock('clockdiv', deadline);
       }
+    //end if statement to see if t < 0 (10 seconds up)
     }
   }//updateClock
   
   updateClock();
   //this calls the updateClock() method every 1 second
-  var timeinterval = setInterval(updateClock, 1000);
-}
+  timeinterval = setInterval(updateClock, 1000);
+    
+}//initializeClock
 
 //scroll to any given div
 function goToByScroll(id){
@@ -445,7 +493,7 @@ $("#loginsubmit").on('click', function() {
     logged_in = true;
     $("#loginbutton").hide();
     $("#loginsubmit").prop('disabled', true);
-    $("#close").trigger('click');
+    $(".close").trigger('click');
     $.ajax({
       type: "POST",
       url: "insertUser",
@@ -483,9 +531,9 @@ var start = function() {
   $("#events, #investment-section").fadeIn(2000);
   deadline = new Date(Date.parse(new Date()) + time);
   initializeClock('clockdiv', deadline); 
-
 };
 
+var timeinterval, eventclick = false;
 var player_array = [];
 var adminMode = false, $username, submitbalance = false, logged_in = false;
 var shoeCounter = 0, phoneCounter = 0, ringCounter = 0, dressCounter = 0, bagCounter = 0;
@@ -507,5 +555,6 @@ var balance = 0;
 var salaryValue = 1000; //fixed salary value
 var weekCounter = 0;
 var deadline = 0;
-var startWeek = 0, endWeek=4, time=10000;
+var event1 = 10, event2 = 26, event3 = 40;
+var startWeek = 0, endWeek=52, time=10000;
 

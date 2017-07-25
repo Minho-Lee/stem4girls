@@ -56,16 +56,11 @@
                                 <h3>Username:  <input type="text" placeholder="Username" id="username" name="username"/></h3>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>
                                 <button type="button" class="btn btn-primary" data-dismiss="modal" id="loginsubmit">Submit</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div id='test1'></div>
-                <div id='test2'></div>
-                <div id='test3'></div>
-                <div id='test4'></div>
 
                 <div id="content">
                     <div class="help-tip">
@@ -78,7 +73,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title" id="myModalLabel">Instructions on how to play the game</h4>
+                                <h4 class="modal-title">Instructions on how to play the game</h4>
                             </div>
                             <div class="modal-body">
                                 <h3 class="margin-bottom-medium">Hello! Welcome to 'Learn To Save!' The game will start once you do three things: </h3>
@@ -96,6 +91,61 @@
                     </div>
                 </div>
 
+                <!-- EVENT 1 -->
+                <div class="modal fade eventmodal" id="event1" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Event 1</h4>
+                            </div>
+                            <div class="modal-body">
+                                <h2 class="margin-bottom-medium">You have been invited to your friend's birthday party! </h2>
+                                <h4 style="margin: 0 10px">In order to attend this party, you MUST buy a gift! This will cost you $50. Would you like to buy a gift or not? (Must make a selection!)</h4>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" data-dismiss="modal" id="do1">BUY</button>
+                                <button type='button' class='btn btn-danger' data-dismiss='modal' id='dont1'>DON'T BUY</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EVENT2 -->
+                <div class="modal fade eventmodal" id="event2" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Event 2</h4>
+                            </div>
+                            <div class="modal-body">
+                                <h3 class="margin-bottom-medium">Your dog was bit by another dog in the park! </h3>
+                                <h4>Do you want to take him to a vet to save her? (Must make a selection!)</h4>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" data-dismiss="modal" id="do2">TAKE TO VET</button>
+                                <button type='button' class='btn btn-danger' data-dismiss='modal' id="dont2">DON'T TAKE TO VET</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EVENT3 -->
+                <div class="modal fade eventmodal" id="event3" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Event 3</h4>
+                            </div>
+                            <div class="modal-body">
+                                <h3 class="margin-bottom-medium">You got a parking ticket!</h3>
+                                <h4>You have to pay $50 as a fine! (No choice but to pay!)</h4>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" data-dismiss="modal" id="do3">Pay!</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="panel panel-success">
                     <div class="panel-heading centered" style="max-width: 10;">
                         <h3 class="salaryHide">The timer will start once you decide on which house to live and how fancy your dinner is!</h3>
